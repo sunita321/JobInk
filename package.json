@@ -1,0 +1,20 @@
+{
+  "name": "jobink",
+  "version": "1.0.0",
+  "description": "Job Search Helper",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sunita321/JobInk.git"
+  },
+  "author": "Sunita Ramnarinesingh",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sunita321/JobInk/issues"
+  },
+  "homepage": "https://github.com/sunita321/JobInk#readme"
+}
