@@ -18,6 +18,13 @@ module.exports = {
 			{
 				var job = {};
 				job.jobkey = data.results[i].jobkey;
+				job.jobtitle = data.results[i].jobtitle;
+				job.snippet = data.results[i].snippet;
+				job.company = data.results[i].company;
+				job.location = data.results[i].location;
+				job.url = data.results[i].url;
+				
+
 				job.date = makeDate();
 				job.saved = false;
 
