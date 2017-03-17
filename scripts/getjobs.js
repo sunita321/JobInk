@@ -17,35 +17,24 @@ var jobsReturn = function (cb)
 	//http://api.indeed.com/ads/apisearch?publisher=348469475547672&q=java&l=austin%2C+tx&sort=&radius=&st=&jt=&start=&limit=&fromage=&filter=&latlong=1&co=us&chnl=&userip=1.2.3.4&useragent=Mozilla/%2F4.0%28Firefox%29&v=2
 
 	// Here we run our AJAX call to Indeed API
-	$.ajax({url: queryURL, method: 'GET', dataType: "jsonp"})
-
-
-	// We store all of the retrieved data inside of an object called "response"
-	.done(function(jobResults) 
+	request(queryURL, function(error, response, body)
 	{
-	  // Log the queryURL
-	  console.log(queryURL);
+		if (!error && response.statusCode === 200)
+		{
+			var jobResults = JSON.parse(body);
+			 console.log(queryURL);
+			 console.log(jobResults);
+			 cb(jobResults);
+		}
+		else {
+	    console.log("Got an error: ", error, ", status code: ", response.statusCode);
+	     cb(null);
+	  	}
+	});
 
-	  // Log the resulting object
-	  console.log(jobResults);
-
-	  
-
-	      //for (var i = 0; i < jobResults.results.length; i++) 
-	      //{
-	      	// Transfer content to HTML
-	      //$('#joblist').append("<tr><td><pre>" + JSON.stringify(jobResults.results[i], null, 2) + "</pre></td></tr>");
-	      //}
-
-	    cb(jobResults);
-
-	});	
 
 
 }
-
-
-
 
 
 module.exports = jobsReturn;

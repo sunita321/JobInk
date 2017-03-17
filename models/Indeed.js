@@ -43,6 +43,6 @@ var indeedJobsSchema = new Schema({
 });
 
 
-var Headline = mongoose.model("Indeed", indeedJobsSchema);
+var Indeed = mongoose.model("Indeed", indeedJobsSchema);
 
 module.exports = Indeed;

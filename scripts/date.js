@@ -1,13 +1,12 @@
 var makeDate = function () 
 {
 	var d = new Date();
-	var formattedDate = "";
+	var formattedDate = d.toISOString();
 
-	formattedDate += (d.getMonth() + 1) + "_";
+	//formattedDate += d.getFullYear()+ "_";	
+	//formattedDate += (d.getMonth() + 1) + "_";
+	//formattedDate += d.getDate();
 
-	formattedDate += d.getDate() + "_";
-
-	formattedDate += d.getFullYear();
 
 	return formattedDate;
 };
