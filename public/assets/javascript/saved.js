@@ -41,6 +41,7 @@ $(document).ready(function()
 
 	function createPanel(job)
 	{
+
 		var panel = $(
 			[
 				"<div class='panel panel-default'>",
@@ -88,6 +89,8 @@ $(document).ready(function()
 
 	function renderNotesList(data)
 	{
+				console.log("why not working?");
+		console.log(data);
 		var notesToRender = [];
 		var currentNote; 
 		if (!data.notes.length)
@@ -98,17 +101,15 @@ $(document).ready(function()
 			"</li>"
 			].join("");
 
-			currentNote.children("button").data("_id", data.notes[i]._id);
-
 			notesToRender.push(currentNote);
 		}
-		else{
-			for (var i = 0; i < data.length; i++) 
+		else {
+			for (var i = 0; i < data.notes.length; i++) 
 			{
 				currentNote = $([
 					"<li class='list-group-item note'>",
 					data.notes[i].noteText,
-					"<button class=' btn btn-danger note-delete'>X</button>",
+					"<button class='btn btn-danger note-delete'>X</button>",
 					"</li>"
 				].join(""));
 
@@ -185,18 +186,22 @@ $(document).ready(function()
 
 		$.get("/api/notes/" + currentJob._id).then(function(data)
 		{
+					console.log("why not working?");
+					console.log(data);
 			var modalText = [
 			"<div class='container-fluid text-center'>",
 			"<h4>Notes for Job: ",
 			currentJob._id,
 			"</h4>",
-			"<hr>",
+			"<hr />",
 			"<ul class='list-group note-container'>",
 			"</ul>",
 			"<textarea placeholder='New Note' rows='4' cols='60'></textarea>",
 			"<button class='btn btn-success save'>Save Note</button>",
 			"</div>"
 			].join("");
+
+			//console.log("ModalText: " + modalText);
 
 			bootbox.dialog({
 				message: modalText,
