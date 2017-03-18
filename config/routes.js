@@ -75,7 +75,7 @@ module.exports = function(router)
 		var query ={};
 		if (req.params.indeed_id)
 		{
-			query._id = req.params.indeed_id;
+			query._jobkeyID = req.params.indeed_id;
 		}
 
 		notesController.get(query, function(err, data)

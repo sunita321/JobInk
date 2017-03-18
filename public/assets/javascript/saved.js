@@ -89,8 +89,7 @@ $(document).ready(function()
 
 	function renderNotesList(data)
 	{
-				console.log("why not working?");
-		console.log(data);
+				
 		var notesToRender = [];
 		var currentNote; 
 		if (!data.notes.length)
@@ -144,15 +143,19 @@ $(document).ready(function()
 
 	function handleNoteSave()
 	{
+
+		console.log("Save me!");
 		var noteData;
 		var newNote = $(".bootbox-body textarea").val().trim();
 
 		if (newNote)
 		{
 			noteData = {
-				_id: $(this).data("article")._id,
+				_jobkeyID: $(this).data("job")._id,
 				noteText: newNote
 			};
+
+			console.log("Save me2!");
 			$.post("/api/notes", noteData).then(function()
 			{
 				bootbox.hideAll();
@@ -186,8 +189,7 @@ $(document).ready(function()
 
 		$.get("/api/notes/" + currentJob._id).then(function(data)
 		{
-					console.log("why not working?");
-					console.log(data);
+			console.log(data);
 			var modalText = [
 			"<div class='container-fluid text-center'>",
 			"<h4>Notes for Job: ",
@@ -195,13 +197,13 @@ $(document).ready(function()
 			"</h4>",
 			"<hr />",
 			"<ul class='list-group note-container'>",
+			//"<li>"+data[0].noteText+"</li>",
 			"</ul>",
 			"<textarea placeholder='New Note' rows='4' cols='60'></textarea>",
 			"<button class='btn btn-success save'>Save Note</button>",
 			"</div>"
 			].join("");
 
-			//console.log("ModalText: " + modalText);
 
 			bootbox.dialog({
 				message: modalText,
@@ -213,7 +215,7 @@ $(document).ready(function()
 				notes: data || []
 			};
 
-			$(".btn.save").data("article", noteData);
+			$(".btn.save").data("job", noteData);
 
 			renderNotesList(noteData);
 		});

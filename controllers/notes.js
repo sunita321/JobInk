@@ -7,13 +7,13 @@ module.exports = {
 	get: function(data, cb) 
 	{
 		Notes.find({
-			_indeedId: data._id
+			_jobkeyID: data._jobkeyID
 		}, cb);
 	},
 	save: function(data, cb)
 	{
 		var newNote = {
-			_indeedId: data._id,
+			_jobkeyID: data._jobkeyID,
 			date: makeDate(),
 			noteText: data.noteText
 		};
