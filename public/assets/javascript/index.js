@@ -2,6 +2,7 @@
 
 $(document).ready(function() 
 {
+	console.log("hello Jeff");
 	// Set div where jobs will go
 	// Add event listener to any "Save Job"
 	// Import new jobs
@@ -13,49 +14,57 @@ $(document).ready(function()
 
 	function initPage()
 	{
+		console.log("hello Jeff2");
 		jobContainer.empty();
 		$.get("/api/indeed?saved=false")
 		 .then(function(data)
 		 {
+		 	console.log("functioncrap")
 		 	if (data && data.length)
 		 	{
+		 		console.log(data);
 		 		renderJobs(data);
+		 		
 		 	}
 		 	else {
 		 		renderEmpty();
+		 		console.log("I'm Empty");
 		 	}
 		 });
 	}
 
 	function renderJobs(jobs)
 	{
+		console.log("render1");
 		var jobPanels = [];
 
 		for (var i = 0; i < jobs.length; i++) 
 		{
+			console.log("render2:" +i);
 			jobPanels.push(createPanel(jobs[i]));
 		}
 
 		jobContainer.append(jobPanels);
+		console.log("render3");
 	}
 
 	function createPanel(job)
 	{
 		var panel = $(
 			[
-				"div class='panel panel-default'>",
-				"div class='panel-heading'>",
+				"<div class='panel panel-default'>",
+				"<div class='panel-heading'>",
 				"<h3>",
-				job.title,
-				"a class='btn btn-success save'>",
+				job.jobtitle,
+				"<a class='btn btn-success save'>",
 				"Save Job",
 				"</a>",
 				"</h3>",
-				"/<div>",
+				"</div>",
 				"<div class='panel-body'>",
 				job.snippet,
-				"/<div>",
-				"/<div>"
+				"</div>",
+				"</div>"
 
 
 			].join(""));
