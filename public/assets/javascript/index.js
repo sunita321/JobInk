@@ -81,16 +81,16 @@ $(document).ready(function()
 			[
 				"<div class='alert alert-warning text-center'>",
 				"<h4>Sorry, no new jobs to display.</h4>",
-				"/<div>",
+				"</div>",
 				"div class='panel panel-default'>",
 				"div class='panel-heading text-center'>",
 				"<h4>What would you like to do?</h4>",
-				"/<div>",
+				"</div>",
 				"div class='panel-body text-center'>",
 				"<h4><a class='search-new'> Try Searching for New Jobs</a></h4>",
 				"<h4><a href='/saved'>Go to your Saved Jobs</a></h4>",
-				"/<div>",
-				"/<div>"
+				"</div>",
+				"</div>"
 
 			].join(""));
 
@@ -124,7 +124,7 @@ $(document).ready(function()
 		.then(function(data)
 		{
 			initPage();
-			bootbox.alert("<h3 class='text-center m-top-80'>" + data.message + "<h3>");
+			bootbox.alert("<h3 class='text-center m-top-80'>" + data.message + "</h3>");
 		});
 	}
 

@@ -1,5 +1,6 @@
 $(document).ready(function()
 {
+
 		var jobContainer = $(".job-container");
 
 		$(document).on("click", ".btn.delete", handleJobDelete);
@@ -42,20 +43,20 @@ $(document).ready(function()
 	{
 		var panel = $(
 			[
-				"div class='panel panel-default'>",
-				"div class='panel-heading'>",
+				"<div class='panel panel-default'>",
+				"<div class='panel-heading'>",
 				"<h3>",
-				job.title,
-				"a class='btn btn-success save'>",
-				"Save Job",
+				job.jobtitle,
+				"<a class='btn btn-danger delete'>",
+				"Delete Job",
 				"</a>",
+				"<a class='btn btn-info notes'>Job Notes</a>",
 				"</h3>",
-				"/<div>",
+				"</div>",
 				"<div class='panel-body'>",
 				job.snippet,
-				"/<div>",
-				"/<div>"
-
+				"</div>",
+				"</div>"
 
 			].join(""));
 
@@ -70,15 +71,15 @@ $(document).ready(function()
 			[
 				"<div class='alert alert-warning text-center'>",
 				"<h4>You don't have any jobs saved.</h4>",
-				"/<div>",
-				"div class='panel panel-default'>",
-				"div class='panel-heading text-center'>",
+				"</div>",
+				"<div class='panel panel-default'>",
+				"<div class='panel-heading text-center'>",
 				"<h4>Would you like to see available jobs?</h4>",
-				"/<div>",
-				"div class='panel-body text-center'>",
+				"</div>",
+				"<div class='panel-body text-center'>",
 				"<h4><a href='/'>View Jobs</a></h4>",
-				"/<div>",
-				"/<div>"
+				"</div>",
+				"</div>"
 
 			].join(""));
 
@@ -92,7 +93,7 @@ $(document).ready(function()
 		if (!data.notes.length)
 		{
 			currentNote = [
-			"li class='list-group-item'>",
+			"<li class='list-group-item'>",
 			"No notes for this job yet.",
 			"</li>"
 			].join("");
@@ -118,10 +119,27 @@ $(document).ready(function()
 			}
 		}
 
-		$("note-container").append(notesToRender);
+		$(".note-container").append(notesToRender);
 
 
 	}
+
+	function handleJobDelete()
+	{
+		var jobToDelete = $(this).parents(".panel").data();
+
+		$.ajax({
+			method: "DELETE",
+			url: "/api/indeed/" + jobToDelete._id
+		}).then(function(data)
+		{
+			if (data.ok)
+			{
+				initPage();
+			}
+		});
+	}
+
 
 	function handleNoteSave()
 	{
@@ -141,13 +159,17 @@ $(document).ready(function()
 		}
 	}
 
-	function handleJobDelete()
+
+
+
+
+	function handleNoteDelete()
 	{
-		var jobToDelete = $(this).parents(".panel").data();
+		var noteToDelete = $(this).parents(".panel").data();
 
 		$.ajax({
 			method: "DELETE",
-			url: "/api/indeed/" + jobToDelete._id
+			url: "/api/notes/" + noteToDelete._id
 		}).then(function(data)
 		{
 			if (data.ok)
@@ -168,11 +190,11 @@ $(document).ready(function()
 			"<h4>Notes for Job: ",
 			currentJob._id,
 			"</h4>",
-			"<hr /",
-			"ul class='list-group note-container'>",
+			"<hr>",
+			"<ul class='list-group note-container'>",
 			"</ul>",
-			"textarea placeholder='New Note' rows='4' cols='60'></textarea>",
-			"button class='btn btn-success save'>Save Note</button>",
+			"<textarea placeholder='New Note' rows='4' cols='60'></textarea>",
+			"<button class='btn btn-success save'>Save Note</button>",
 			"</div>"
 			].join("");
 

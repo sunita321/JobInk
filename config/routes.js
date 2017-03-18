@@ -69,8 +69,9 @@ module.exports = function(router)
 	});
 
 	//Route to get Notes
-	router.get("api/notes/:indeed_id?", function(req, res)
+	router.get("/api/notes/:indeed_id?", function(req, res)
 	{
+		
 		var query ={};
 		if (req.params.indeed_id)
 		{

@@ -22,8 +22,8 @@ var jobsReturn = function (cb)
 		if (!error && response.statusCode === 200)
 		{
 			var jobResults = JSON.parse(body);
-			 console.log(queryURL);
-			 console.log(jobResults);
+			 //console.log(queryURL);
+			 //console.log(jobResults);
 			 cb(jobResults);
 		}
 		else {
