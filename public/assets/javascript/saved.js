@@ -61,7 +61,7 @@ $(document).ready(function()
 
 			].join(""));
 
-		panel.data("_id", job._id);
+		panel.data("job", job);
 
 		return panel;
 	}
@@ -130,7 +130,7 @@ $(document).ready(function()
 
 		$.ajax({
 			method: "DELETE",
-			url: "/api/indeed/" + jobToDelete._id
+			url: "/api/indeed/" + jobToDelete.job._id
 		}).then(function(data)
 		{
 			if (data.ok)
@@ -169,15 +169,19 @@ $(document).ready(function()
 
 	function handleNoteDelete()
 	{
-		var noteToDelete = $(this).parents(".panel").data();
+		var noteToDelete = $(this).data();
+
+		console.log(noteToDelete);
 
 		$.ajax({
 			method: "DELETE",
 			url: "/api/notes/" + noteToDelete._id
 		}).then(function(data)
 		{
+			console.log("DD1");
 			if (data.ok)
 			{
+				console.log("DD2");
 				initPage();
 			}
 		});
@@ -187,13 +191,13 @@ $(document).ready(function()
 	{
 		var currentJob = $(this).parents(".panel").data();
 
-		$.get("/api/notes/" + currentJob._id).then(function(data)
+		$.get("/api/notes/" + currentJob.job._id).then(function(data)
 		{
 			console.log(data);
 			var modalText = [
 			"<div class='container-fluid text-center'>",
 			"<h4>Notes for Job: ",
-			currentJob._id,
+			currentJob.job.jobtitle,
 			"</h4>",
 			"<hr />",
 			"<ul class='list-group note-container'>",
@@ -211,7 +215,7 @@ $(document).ready(function()
 			});
 
 			var noteData = {
-				_id: currentJob._id,
+				_id: currentJob.job._id,
 				notes: data || []
 			};
 
