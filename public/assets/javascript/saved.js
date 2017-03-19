@@ -108,11 +108,12 @@ $(document).ready(function()
 				currentNote = $([
 					"<li class='list-group-item note'>",
 					data.notes[i].noteText,
-					"<button class='btn btn-danger note-delete'>X</button>",
+					"<div class='deletebutton text-right'>",
+					"<button class='btn btn-danger note-delete'>X</button></div>",
 					"</li>"
 				].join(""));
 
-				currentNote.children("button").data("_id", data.notes[i]._id);
+				currentNote.children(".deletebutton").children("button").data("_id", data.notes[i]._id);
 
 
 				notesToRender.push(currentNote);
@@ -185,6 +186,8 @@ $(document).ready(function()
 
 		console.log(getSavedBtnData);
 
+		console.log(noteToDelete._id);
+
 		$.ajax({
 			method: "DELETE",
 			url: "/api/notes/" + noteToDelete._id
@@ -222,9 +225,10 @@ $(document).ready(function()
 			currentJob.job.jobtitle,
 			"</h4>",
 			"<hr />",
+			"<div class='text-left'>",
 			"<ul class='list-group note-container'>",
 			//"<li>"+data[0].noteText+"</li>",
-			"</ul>",
+			"</ul></div>",
 			"<textarea placeholder='New Note' rows='4' cols='60'></textarea>",
 			"<button class='btn btn-success save'>Save Note</button>",
 			"</div>"

@@ -90,6 +90,7 @@ module.exports = function(router)
 		console.log("serverD");
 		var query = {};
 		query._id = req.params.id;
+		console.log(query._id);
 		notesController.delete(query, function(err, data)
 		{
 			res.json(data);
