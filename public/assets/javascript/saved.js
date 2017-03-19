@@ -89,7 +89,7 @@ $(document).ready(function()
 
 	function renderNotesList(data)
 	{
-				
+		$(".note-container").empty();
 		var notesToRender = [];
 		var currentNote; 
 		if (!data.notes.length)
@@ -113,6 +113,7 @@ $(document).ready(function()
 				].join(""));
 
 				currentNote.children("button").data("_id", data.notes[i]._id);
+
 
 				notesToRender.push(currentNote);
 
@@ -158,7 +159,17 @@ $(document).ready(function()
 			console.log("Save me2!");
 			$.post("/api/notes", noteData).then(function()
 			{
-				bootbox.hideAll();
+				//bootbox.hideAll();
+				$.get("/api/notes/" + noteData._jobkeyID).then(function(data)
+				{
+					var noteList = {
+						_id: noteData._jobkeyID,
+						notes: data || []
+					};
+
+					renderNotesList(noteList);
+					$(".bootbox-body textarea").val('');
+				});
 			});
 		}
 	}
@@ -170,19 +181,30 @@ $(document).ready(function()
 	function handleNoteDelete()
 	{
 		var noteToDelete = $(this).data();
+		var getSavedBtnData = $(this).parents("#notesdiv").children(".btn.save").data();
 
-		console.log(noteToDelete);
+		console.log(getSavedBtnData);
 
 		$.ajax({
 			method: "DELETE",
 			url: "/api/notes/" + noteToDelete._id
 		}).then(function(data)
 		{
-			console.log("DD1");
+			console.log(data);
 			if (data.ok)
 			{
-				console.log("DD2");
-				initPage();
+				
+				//initPage();
+				$.get("/api/notes/" + getSavedBtnData.job._id).then(function(data)
+				{
+					console.log(noteToDelete);
+					var noteList = {
+						_id: getSavedBtnData.job._id, 
+						notes: data || []
+					};
+
+					renderNotesList(noteList);
+				});
 			}
 		});
 	}
@@ -195,7 +217,7 @@ $(document).ready(function()
 		{
 			console.log(data);
 			var modalText = [
-			"<div class='container-fluid text-center'>",
+			"<div class='container-fluid text-center' id='notesdiv'>",
 			"<h4>Notes for Job: ",
 			currentJob.job.jobtitle,
 			"</h4>",
