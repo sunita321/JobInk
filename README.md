@@ -1,3 +1,3 @@
-# Job Ink
+# Job Ink :black_nib: :notebook:
 
-### A job search helper tool
+### A job search assistant
