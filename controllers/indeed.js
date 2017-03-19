@@ -9,9 +9,9 @@ var makeDate = require("../scripts/date");
 var Indeed = require("../models/Indeed");
 
 module.exports = {
-	fetch: function (cb) 
+	fetch: function (jobTitle, jobLocation, cb) 
 	{
-		getjobs(function(data)
+		getjobs(jobTitle, jobLocation, function(data)
 		{
 			var jobs = [];
 			for (var i=0; i < data.results.length; i++)

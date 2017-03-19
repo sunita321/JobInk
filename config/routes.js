@@ -19,7 +19,7 @@ module.exports = function(router)
 
 	router.get("/api/fetch", function(req, res)
 	{
-		indeedController.fetch(function(err, docs)
+		indeedController.fetch(req.query.jobTitle, req.query.jobLocation,function(err, docs)
 		{
 			if (!docs || docs.insertedCount === 0)
 			{

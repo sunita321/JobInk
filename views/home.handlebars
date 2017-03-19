@@ -22,12 +22,81 @@
 	<h1>Job Ink</h1>
 </div>
 
+<div class="col-md-3"></div> 
+<div class="seach-form">
+<!-- Special version of Bootstrap that only affects content wrapped in .bootstrap-iso -->
+<link rel="stylesheet" href="https://formden.com/static/cdn/bootstrap-iso.css" /> 
+
+<!--Font Awesome (added because you use icons in your prepend/append)-->
+<link rel="stylesheet" href="https://formden.com/static/cdn/font-awesome/4.4.0/css/font-awesome.min.css" />
+
+<!-- Inline CSS based on choices in "Settings" tab -->
+<style>.bootstrap-iso .form-group button, .bootstrap-iso form input.form-control, .bootstrap-iso form textarea.form-control, .bootstrap-iso form select.form-control, .bootstrap-iso form .form-group-lg input.form-control, .bootstrap-iso form .form-group-lg textarea.form-control, .bootstrap-iso form .form-group-lg select.form-control, .bootstrap-iso form .form-group-sm input.form-control, .bootstrap-iso form .form-group-sm textarea.form-control, .bootstrap-iso form .form-group-sm select.form-control{-webkit-border-radius: 20px;-moz-border-radius: 20px; border-radius: 20px;}.bootstrap-iso .formden_header h2, .bootstrap-iso .formden_header p, .bootstrap-iso form{font-family: Tahoma, Geneva, sans-serif; color: black}.bootstrap-iso form button, .bootstrap-iso form button:hover{color: #ffffff !important;} .bootstrap-iso .btn-custom{color: white; background: #e76c1b} .bootstrap-iso .btn-custom:hover{background: #d35807;} .asteriskField{color: red;}.bootstrap-iso form .input-group-addon {color:#555555; background-color: #e9eef4; border-radius: 20px; padding-left:15px}</style>
+
+<!-- HTML Form (wrapped in a .bootstrap-iso div) -->
+<div class="bootstrap-iso">
+ <div class="container-fluid text-center">
+  <div class="row">
+   <div class="col-md-6 col-sm-6 col-xs-12">
+    <form method="get" action="">
+     <div class="form-group ">
+      <label class="control-label requiredField" for="jobterm">
+       Job
+       <span class="asteriskField">
+        *
+       </span>
+      </label>
+      <input class="form-control" id="jobterm" name="jobterm" type="text"/>
+      <span class="help-block" id="hint_jobterm">
+       Enter a job title or keyword
+      </span>
+     </div>
+     <div class="form-group ">
+      <label class="control-label requiredField" for="locationterm">
+       Location
+       <span class="asteriskField">
+        *
+       </span>
+      </label>
+      <div class="input-group">
+       <input class="form-control" id="locationterm" name="locationterm" type="text"/>
+       <div class="input-group-addon">
+        <i class="fa fa-globe">
+        </i>
+       </div>
+      </div>
+      <span class="help-block" id="hint_locationterm">
+       Enter city, state or zipcode
+      </span>
+     </div>
+    </form>
+
+
+     <div class="form-group">
+      <div>
+       <button class="btn btn-custom search-new">
+        Search
+       </button>
+      </div>
+     </div>
+  
+   </div>
+  </div>
+ </div>
+</div>
+
+</div>
+
+<div class="col-md-3"></div> 
+
+
 <div class="container-fluid job-container">
+
 </div>
 
 <footer class="footer">
 	<div class="container">
-	<p>Job Search Tool</p>
+	<p>Job Ink Tool</p>
 </footer>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>

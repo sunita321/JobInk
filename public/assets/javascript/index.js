@@ -2,7 +2,6 @@
 
 $(document).ready(function() 
 {
-	console.log("hello Jeff");
 	// Set div where jobs will go
 	// Add event listener to any "Save Job"
 	// Import new jobs
@@ -14,12 +13,12 @@ $(document).ready(function()
 
 	function initPage()
 	{
-		console.log("hello Jeff2");
+		
 		jobContainer.empty();
 		$.get("/api/indeed?saved=false")
 		 .then(function(data)
 		 {
-		 	console.log("functioncrap")
+		 
 		 	if (data && data.length)
 		 	{
 		 		console.log(data);
@@ -82,11 +81,11 @@ $(document).ready(function()
 				"<div class='alert alert-warning text-center'>",
 				"<h4>Sorry, no new jobs to display.</h4>",
 				"</div>",
-				"div class='panel panel-default'>",
-				"div class='panel-heading text-center'>",
+				"<div class='panel panel-default'>",
+				"<div class='panel-heading text-center'>",
 				"<h4>What would you like to do?</h4>",
 				"</div>",
-				"div class='panel-body text-center'>",
+				"<div class='panel-body text-center'>",
 				"<h4><a class='search-new'> Try Searching for New Jobs</a></h4>",
 				"<h4><a href='/saved'>Go to your Saved Jobs</a></h4>",
 				"</div>",
@@ -104,7 +103,6 @@ $(document).ready(function()
 
 		$.ajax({
 			method: "PATCH",
-			//???
 			url: "/api/indeed",
 			data: jobToSave
 		})
@@ -120,7 +118,14 @@ $(document).ready(function()
 
 	function handleJobSearch()
 	{
-		$.get("api/fetch")
+		var title = $('#jobterm').val().trim();
+		var location = $('#locationterm').val().trim();
+
+		$.get({url:"api/fetch",
+				data: {jobTitle: title,
+					jobLocation: location
+
+				}})
 		.then(function(data)
 		{
 			initPage();
