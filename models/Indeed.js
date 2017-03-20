@@ -39,6 +39,15 @@ var indeedJobsSchema = new Schema({
 	saved:{
 		type: Boolean,
 		default: false,
+	},
+
+	glassurl:{
+		type: String
+	
+	},
+
+	rating:{
+		type: String
 	}
 });
 
