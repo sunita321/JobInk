@@ -38,7 +38,7 @@ var indeedJobsSchema = new Schema({
 	
 	saved:{
 		type: Boolean,
-		default: false
+		default: false,
 	}
 });
 

@@ -2,3 +2,19 @@ body{
 	
 	font-family: 'Palanquin', sans-serif;
 }
+
+img.logo {
+    width: 15%;
+    height: auto;
+
+}
+
+.companyText{
+	color: blue;
+
+}
+
+.locationText{
+	color: green;
+	
+}

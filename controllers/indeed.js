@@ -21,7 +21,7 @@ module.exports = {
 				job.jobtitle = data.results[i].jobtitle;
 				job.snippet = data.results[i].snippet;
 				job.company = data.results[i].company;
-				job.location = data.results[i].location;
+				job.location = data.results[i].formattedLocation;
 				job.url = data.results[i].url;
 				
 

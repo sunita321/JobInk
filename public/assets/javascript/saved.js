@@ -47,6 +47,9 @@ $(document).ready(function()
 				"<div class='panel panel-default'>",
 				"<div class='panel-heading'>",
 				"<h3>",
+				"<a href='",
+				job.url,
+				"'>",
 				job.jobtitle,
 				"<a class='btn btn-danger delete'>",
 				"Delete Job",
@@ -56,6 +59,11 @@ $(document).ready(function()
 				"</div>",
 				"<div class='panel-body'>",
 				job.snippet,
+				"<div class='companyText'>",
+				job.company,
+				"<div class='locationText'>",
+				job.location,
+				"</div>",
 				"</div>",
 				"</div>"
 
