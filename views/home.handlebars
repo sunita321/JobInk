@@ -38,15 +38,15 @@
  <div class="container-fluid text-center">
   <div class="row">
    <div class="col-md-6 col-sm-6 col-xs-12">
-    <form method="get" action="">
-     <div class="form-group ">
+    <form data-toggle="validator" role="form" id="formjobsearch">
+     <div class="form-group required">
       <label class="control-label requiredField" for="jobterm">
        Job
        <span class="asteriskField">
         *
        </span>
       </label>
-      <input class="form-control" id="jobterm" name="jobterm" type="text"/>
+      <input class="form-control" id="jobterm" name="jobterm" type="text" required/>
       <span class="help-block" id="hint_jobterm">
        Enter a job title or keyword
       </span>
@@ -59,7 +59,7 @@
        </span>
       </label>
       <div class="input-group">
-       <input class="form-control" id="locationterm" name="locationterm" type="text"/>
+       <input class="form-control" id="locationterm" name="locationterm" type="text" required/>
        <div class="input-group-addon">
         <i class="fa fa-globe">
         </i>
@@ -69,16 +69,17 @@
        Enter city, state or zipcode
       </span>
      </div>
-    </form>
+  
 
 
      <div class="form-group">
       <div>
-       <button class="btn btn-custom search-new">
+       <button type="submit" class="btn btn-custom search-new">
         Search
        </button>
       </div>
      </div>
+       </form>
   
    </div>
   </div>
@@ -100,8 +101,13 @@
 </footer>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+
 <!-- Latest compiled and minified JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+ <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.10.2/validator.min.js"></script>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.4.0/bootbox.min.js"></script>
 
 <script src="../../assets/javascript/index.js"></script>

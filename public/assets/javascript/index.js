@@ -7,7 +7,8 @@ $(document).ready(function()
 	// Import new jobs
 	var jobContainer = $(".job-container");
 	$(document).on("click", ".btn.save", handleJobSave);
-	$(document).on("click", ".search-new", handleJobSearch);
+	//$(document).on("click", ".search-new", handleJobSearch);
+	$('#formjobsearch').validator().on('submit', handleJobSearch);
 
 	initPage();
 
@@ -54,7 +55,11 @@ $(document).ready(function()
 				"<div class='panel panel-default'>",
 				"<div class='panel-heading'>",
 				"<h3>",
+				"<a href='",
+				job.url,
+				"'>",
 				job.jobtitle,
+				"</a>",
 				"<a class='btn btn-success save'>",
 				"Save Job",
 				"</a>",
@@ -116,21 +121,38 @@ $(document).ready(function()
 		});
 	}
 
-	function handleJobSearch()
+
+	function handleJobSearch(event)
 	{
 		var title = $('#jobterm').val().trim();
 		var location = $('#locationterm').val().trim();
 
-		$.get({url:"api/fetch",
+
+		if(event.isDefaultPrevented())
+		{
+
+		}
+		else 
+		{
+
+			event.preventDefault();
+
+
+			$.get({url:"api/fetch",
 				data: {jobTitle: title,
-					jobLocation: location
+					jobLocation: location,
 
 				}})
-		.then(function(data)
-		{
-			initPage();
-			bootbox.alert("<h3 class='text-center m-top-80'>" + data.message + "<h3>");
-		});
+			.then(function(data)
+			{
+				initPage();
+				bootbox.alert("<h3 class='text-center m-top-80'>" + data.message + "<h3>");
+			});
+
+		}
+	
+
+
 	}
 
 
