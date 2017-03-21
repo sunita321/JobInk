@@ -60,7 +60,7 @@ $(document).ready(function()
 				"'>",
 				job.jobtitle,
 				"</a>",
-				"<a class='btn btn-success save'>",
+				"<a class='btn btn-success save savejob'>",
 				"Save Job",
 				"</a>",
 				"</h3>",
@@ -126,6 +126,7 @@ $(document).ready(function()
 	{
 		var title = $('#jobterm').val().trim();
 		var location = $('#locationterm').val().trim();
+		//localStorage.setItem("title", title); 
 
 
 		if(event.isDefaultPrevented())
