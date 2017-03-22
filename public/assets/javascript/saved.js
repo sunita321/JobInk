@@ -11,6 +11,7 @@ $(document).ready(function()
 		initPage();
 
 
+
 	function initPage()
 	{
 		jobContainer.empty();
@@ -44,20 +45,18 @@ $(document).ready(function()
 
 		var panel = $(
 			[
+				"<div class='divider'></div>",
+				
 				"<div class='panel panel-default'>",
 				"<div class='panel-heading'>",
-				"<h3>",
+				"<h5>",
 				"<a href='",
 				job.url,
-				"'>",
+				"'target='_blank'>",
 				job.jobtitle,
-				"<div class='buttonsaction text-right'>",
-				"<a class='btn btn-info notes'>Job Notes</a>",
-				"<a class='btn btn-danger delete'>",
-				"Delete Job",
+				"</h5>",
 				"</a>",
-				"</h3>",
-				"</div>",
+
 				"<div class='panel-body'>",
 				job.snippet,
 				"<div class='companyText'>",
@@ -73,7 +72,19 @@ $(document).ready(function()
 				"<div class='locationText'>",
 				job.location,
 				"</div>",
+				"<a class='btn btn-floating waves-effect waves-light blue notes'>",
+				"<i class='material-icons'>note_add</i>",
+				"</a>",
+				"<a class='btn btn-floating waves-effect waves-light red delete'>",
+				"<i class='material-icons'>delete</i>",
+				"</a>",
+				
 				"</div>",
+
+
+
+				"</div>",
+				"<div class='col s12 spacer'></div>",
 				"</div>"
 
 			].join(""));
@@ -87,15 +98,24 @@ $(document).ready(function()
 	{
 		var emptyAlert = $(
 			[
-				"<div class='alert alert-warning text-center'>",
-				"<h4>You don't have any jobs saved.</h4>",
-				"</div>",
-				"<div class='panel panel-default'>",
-				"<div class='panel-heading text-center'>",
-				"<h4>Would you like to see available jobs?</h4>",
-				"</div>",
+			     "<div class='row'>",
+			       "<div class='col s3'></div>",
+			        "<div class='col s6'>",
+			          "<div class='card-panel'>",
+			            "<div class='card-content blue-text center-align'>",
+			              "<span class='card-title'>You don't have any jobs saved.</span>",
+			              "<p>Would you like to see available jobs?</p>",
+			            "</div>",
+			             "<div class='card-action center-align'>",
+			            "<h4><a href='/'>View Jobs</a></h4>",
+
+
+			      "<div class='col s3'></div>",
+
 				"<div class='panel-body text-center'>",
-				"<h4><a href='/'>View Jobs</a></h4>",
+
+
+				
 				"</div>",
 				"</div>"
 
@@ -252,10 +272,10 @@ $(document).ready(function()
 			].join("");
 
 
-			bootbox.dialog({
+			/*bootbox.dialog({
 				message: modalText,
 				closeButton: true
-			});
+			});*/
 
 			var noteData = {
 				_id: currentJob.job._id,

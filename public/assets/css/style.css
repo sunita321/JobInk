@@ -4,7 +4,7 @@ body{
 }
 
 img.logo {
-    width: 15%;
+    width: 20%;
     height: auto;
 
 }
@@ -20,5 +20,8 @@ img.logo {
 }
 
 .savejob{
-	margin-left: 10px;
+	margin-left: 0px;
+}
+.spacer{ margin-top: 20px;
+
 }

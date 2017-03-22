@@ -51,25 +51,34 @@ $(document).ready(function()
 	function createPanel(job)
 	{
 		var panel = $(
-			[
+			[	
+				"<div class='divider'></div>",
+				
 				"<div class='panel panel-default'>",
 				"<div class='panel-heading'>",
-				"<h3>",
+				"<h5>",
 				"<a href='",
 				job.url,
-				"'>",
+				"'target='_blank'>",
 				job.jobtitle,
+				"</h5>",
 				"</a>",
-				"<a class='btn btn-success save savejob'>",
-				"Save Job",
-				"</a>",
-				"</h3>",
-				"</div>",
+
 				"<div class='panel-body'>",
 				job.snippet,
 				"</div>",
-				"</div>"
+				"</a>",
+				"<a class='btn btn-success waves-effect waves-light save savejob'>",
+				"<i class='material-icons right'>input</i>",
 
+				"Save Job",
+				"</a>",
+
+				"</div>",
+				"<div class='col s12 spacer'></div>",
+
+				"</div>",
+				
 
 			].join(""));
 
@@ -147,7 +156,11 @@ $(document).ready(function()
 			.then(function(data)
 			{
 				initPage();
-				bootbox.alert("<h3 class='text-center m-top-80'>" + data.message + "<h3>");
+				Materialize.toast("<p class='text-center m-top-80'>" + data.message + "<h3>", 5000, 'rounded');
+
+			
+			
+				//bootbox.alert("<h3 class='text-center m-top-80'>" + data.message + "<h3>");
 			});
 
 		}
