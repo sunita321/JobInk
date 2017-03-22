@@ -70,7 +70,7 @@ $(document).ready(function()
 				"</div>",
 				"</a>",
 				"<a class='btn btn-success waves-effect waves-light save savejob'>",
-				"<i class='material-icons right'>input</i>",
+				"<i class='material-icons right'>thumb_up</i>",
 
 				"Save Job",
 				"</a>",

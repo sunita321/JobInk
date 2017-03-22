@@ -151,11 +151,18 @@ $(document).ready(function()
 			for (var i = 0; i < data.notes.length; i++) 
 			{
 				currentNote = $([
+					"<div class='divider'></div>",
+					"<div class='col s12 spacer'></div>",
 					"<li class='list-group-item note'>",
 					data.notes[i].noteText,
-					"<div class='deletebutton text-right'>",
-					"<button class='btn btn-danger note-delete'>X</button></div>",
-					"</li>"
+
+					"<div class='deletebutton right-align'>",
+					"<button class='btn btn-floating note-delete red'><i class='material-icons'>delete</i></button></div>",
+					"</li>",
+					"<div class='col s12 spacer'></div>"
+
+					
+					
 				].join(""));
 
 				currentNote.children(".deletebutton").children("button").data("_id", data.notes[i]._id);
@@ -266,11 +273,9 @@ $(document).ready(function()
 		$.get("/api/notes/" + currentJob.job._id).then(function(data)
 		{
 			console.log(data);
-			$('#notesTitle').html('Notes for: ' + currentJob.job.jobtitle);
+			$('#notesTitle').html("<h5>Notes for: " + currentJob.job.jobtitle + "</h5>");
 			var modalText = [
 			"<div class='container-fluid text-center' id='notesdiv'>",
-			"<h4>Notes for Job: ",
-			"</h4>",
 			"<hr />",
 			"<div class='text-left'>",
 			"<ul class='list-group note-container'>",
