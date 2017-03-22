@@ -8,7 +8,15 @@ $(document).ready(function()
 		$(document).on("click", ".btn.save", handleNoteSave);
 		$(document).on("click", ".btn.note-delete", handleNoteDelete);
 
+		// define the modal
+	    $('#noteModal').modal({
+	    });
+
 		initPage();
+
+
+
+
 
 
 
@@ -180,12 +188,14 @@ $(document).ready(function()
 	}
 
 
-	function handleNoteSave()
+	function handleNoteSave(event)
 	{
 
 		console.log("Save me!");
 		var noteData;
-		var newNote = $(".bootbox-body textarea").val().trim();
+		var newNote = $("#noteText").val().trim();
+
+		event.preventDefault();
 
 		if (newNote)
 		{
@@ -206,7 +216,7 @@ $(document).ready(function()
 					};
 
 					renderNotesList(noteList);
-					$(".bootbox-body textarea").val('');
+					$("#noteText").val('');
 				});
 			});
 		}
@@ -219,7 +229,7 @@ $(document).ready(function()
 	function handleNoteDelete()
 	{
 		var noteToDelete = $(this).data();
-		var getSavedBtnData = $(this).parents("#notesdiv").children(".btn.save").data();
+		var getSavedBtnData = $(this).parents("#noteModal").children(".modal-footer").children('#noteForm').children(".btn.save").data();
 
 		console.log(getSavedBtnData);
 
@@ -256,10 +266,10 @@ $(document).ready(function()
 		$.get("/api/notes/" + currentJob.job._id).then(function(data)
 		{
 			console.log(data);
+			$('#notesTitle').html('Notes for: ' + currentJob.job.jobtitle);
 			var modalText = [
 			"<div class='container-fluid text-center' id='notesdiv'>",
 			"<h4>Notes for Job: ",
-			currentJob.job.jobtitle,
 			"</h4>",
 			"<hr />",
 			"<div class='text-left'>",
@@ -270,6 +280,9 @@ $(document).ready(function()
 			"<button class='btn btn-success save'>Save Note</button>",
 			"</div>"
 			].join("");
+
+				// open the modal
+	        $('#noteModal').modal('open');
 
 
 			/*bootbox.dialog({

@@ -1,5 +1,5 @@
   <nav class = "#1565c0 blue darken-3">
-    <div class="nav-wrapper">
+    <div class="nav-wrapper container">
       <a href="/" class="brand-logo left">Job Ink</a>
       <ul class="right hide-on-med-and-down">
         <li><a href="/">Home</a></li>
@@ -24,17 +24,17 @@
 <div id="noteModal" class="modal modal-fixed-footer">
 
     <div class="modal-content">
-        <p>Notes</p>
-        <ul class="messages collection"></ul>
+         <h4 id="notesTitle"></h4>
+        <ul class="note-container"></ul>
     </div>
     
     <div class="modal-footer">
         <form name="noteForm" id="noteForm">
-                    <input required placeholder="Enter a note here" type="text" name="noteText" id="noteText">
-            <button class="btn green left" type="submit" id="noteButton">
+            <input required placeholder="Enter a note here" type="text" name="noteText" id="noteText">
+            <button class="btn green left save" type="submit" id="noteButton">
                 Post Note!
             </button>
-            <a href="/" class="modal-action modal-close waves-effect waves-light btn-flat">Close</a>
+            <a href="#!" class="modal-action modal-close waves-effect waves-light btn-flat">Close</a>
         </form>
     </div>
 
@@ -55,15 +55,6 @@
 
 
 
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-
-
-<!-- Latest compiled and minified JavaScript -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.4.0/bootbox.min.js"></script>
 
 <script src="../../assets/javascript/saved.js"></script>
 
