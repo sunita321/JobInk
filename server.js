@@ -33,6 +33,9 @@ app.use(bodyParser.urlencoded({
 
 app.use(router);
 
+var MONGODB_URI = "mongodb://heroku_pjlccg96:rl5b83vfh7382t20o59bd8ovnq@ds137360.mlab.com:37360/heroku_pjlccg96";
+
+
 //Mongoose database
 var db = process.env.MONGODB_URI || "mongodb://localhost/mongoJobs";
 
