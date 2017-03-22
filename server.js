@@ -3,6 +3,8 @@ var express = require("express");
 var mongoose = require("mongoose");
 var hbs = require("express-handlebars");
 var bodyParser = require("body-parser");
+var Promise = require('bluebird');
+mongoose.Promise = Promise;
 
 
 // Set up Port
