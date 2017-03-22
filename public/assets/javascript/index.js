@@ -2,6 +2,7 @@
 
 $(document).ready(function() 
 {
+	var autocomplete = new google.maps.places.Autocomplete($('#locationterm')[0], {types: ['(regions)']});
 	// Set div where jobs will go
 	// Add event listener to any "Save Job"
 	// Import new jobs
@@ -135,7 +136,7 @@ $(document).ready(function()
 	{
 		var title = $('#jobterm').val().trim();
 		var location = $('#locationterm').val().trim();
-		//localStorage.setItem("title", title); 
+		//var autocomplete = new google.maps.places.Autocomplete(location);
 
 
 		if(event.isDefaultPrevented())
