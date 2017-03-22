@@ -2,6 +2,8 @@
 
 $(document).ready(function() 
 {
+	$(".button-collapse").sideNav();//materialize mobile view nav
+
 	var autocomplete = new google.maps.places.Autocomplete($('#locationterm')[0], {types: ['(regions)']});
 	// Set div where jobs will go
 	// Add event listener to any "Save Job"
@@ -93,16 +95,19 @@ $(document).ready(function()
 	{
 		var emptyAlert = $(
 			[
-				"<div class='alert alert-warning text-center'>",
-				"<h4>Sorry, no new jobs to display.</h4>",
-				"</div>",
-				"<div class='panel panel-default'>",
-				"<div class='panel-heading text-center'>",
-				"<h4>What would you like to do?</h4>",
-				"</div>",
-				"<div class='panel-body text-center'>",
-				"<h4><a class='search-new'> Try Searching for New Jobs</a></h4>",
-				"<h4><a href='/saved'>Go to your Saved Jobs</a></h4>",
+				"<div class='row'>",
+			       "<div class='col s3'></div>",
+			        "<div class='col s6'>",
+			          "<div class='card-panel'>",
+			            "<div class='card-content blue-text center-align'>",
+			              "<span class='card-title'>No search results to display.</span>",
+			              "<p>Try using the search above to find new jobs.</p>",
+			              "<p>Or</p>",
+			              "<h5><a href='/saved'>Go to your Saved Jobs</a></h5>",
+			            "</div>",
+			             "<div class='card-action center-align'>",
+		
+
 				"</div>",
 				"</div>"
 

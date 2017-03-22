@@ -1,5 +1,6 @@
 $(document).ready(function()
 {
+		$(".button-collapse").sideNav();//materialize mobile view nav
 
 		var jobContainer = $(".job-container");
 
