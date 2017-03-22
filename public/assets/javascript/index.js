@@ -162,7 +162,7 @@ $(document).ready(function()
 			.then(function(data)
 			{
 				initPage();
-				Materialize.toast("<p class='text-center m-top-80'>" + data.message + "<h3>", 5000, 'rounded');
+				Materialize.toast("<p class='text-center m-top-80'>" + data.message + "<h3>", 4000, 'rounded');
 
 			
 			
