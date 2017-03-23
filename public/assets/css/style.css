@@ -25,3 +25,12 @@ img.logo {
 .spacer{ margin-top: 20px;
 
 }
+
+#bloc_cont{
+
+}
+
+#addbuttonbloc, #deletebuttonbloc
+{
+    display:inline;
+}

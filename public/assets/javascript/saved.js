@@ -84,10 +84,11 @@ $(document).ready(function()
 				"<a class='btn btn-floating waves-effect waves-light blue notes'>",
 				"<i class='material-icons'>note_add</i>",
 				"</a>",
+				"<div class='deletebutton right-align'>",
 				"<a class='btn btn-floating waves-effect waves-light red delete'>",
-				"<i class='material-icons'>delete</i>",
+				"<i class='material-icons'>delete_forever</i>",
 				"</a>",
-				
+				"</div>",
 				"</div>",
 
 
