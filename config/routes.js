@@ -106,5 +106,18 @@ module.exports = function(router)
 		});
 	});
 
+	//Route to Clear Search Results that are NOT saved
+
+	router.delete("/api/clear", function(req, res)
+	{
+		console.log("serverClear");
+		var query = {};
+		query.saved = false;
+		indeedController.delete(query, function(err, data)
+		{
+			res.json(data);
+		});
+	});
+
 
 }

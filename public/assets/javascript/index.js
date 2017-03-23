@@ -4,6 +4,7 @@ $(document).ready(function()
 {
 	$(".button-collapse").sideNav();//materialize mobile view nav
 
+
 	var autocomplete = new google.maps.places.Autocomplete($('#locationterm')[0], {types: ['(regions)']});
 	// Set div where jobs will go
 	// Add event listener to any "Save Job"
@@ -12,6 +13,9 @@ $(document).ready(function()
 	$(document).on("click", ".btn.save", handleJobSave);
 	//$(document).on("click", ".search-new", handleJobSearch);
 	$('#formjobsearch').validator().on('submit', handleJobSearch);
+
+	//Clear all unsaved search results
+	$('#clear-results').on("click", handleClearResults);
 
 	initPage();
 
@@ -25,30 +29,30 @@ $(document).ready(function()
 		 
 		 	if (data && data.length)
 		 	{
-		 		console.log(data);
+		 		//console.log(data);
 		 		renderJobs(data);
 		 		
 		 	}
 		 	else {
 		 		renderEmpty();
-		 		console.log("I'm Empty");
+		 		//console.log("I'm Empty");
 		 	}
 		 });
 	}
 
 	function renderJobs(jobs)
 	{
-		console.log("render1");
+		//console.log("render1");
 		var jobPanels = [];
 
 		for (var i = 0; i < jobs.length; i++) 
 		{
-			console.log("render2:" +i);
+			//console.log("render2:" +i);
 			jobPanels.push(createPanel(jobs[i]));
 		}
 
 		jobContainer.append(jobPanels);
-		console.log("render3");
+		//console.log("render3");
 	}
 
 	function createPanel(job)
@@ -162,7 +166,7 @@ $(document).ready(function()
 			.then(function(data)
 			{
 				initPage();
-				Materialize.toast("<p class='text-center m-top-80'>" + data.message + "<h3>", 4000, 'rounded');
+				Materialize.toast("<p class='text-center m-top-80'>" + data.message + "</p>", 4000, 'rounded');
 
 			
 			
@@ -174,6 +178,27 @@ $(document).ready(function()
 
 
 	}
+
+	function handleClearResults(event)
+	{
+		console.log("clear1");
+		event.preventDefault();
+
+		$.ajax({
+			method: "DELETE",
+			url: "/api/clear"
+		}).then(function(data)
+		{
+			console.log(data);
+			if (data.ok)
+			{
+				initPage();
+				Materialize.toast("<p class='text-center m-top-80'>All search results cleared!</p>", 4000, 'rounded');
+			}
+		});
+
+	}
+
 
 
 
