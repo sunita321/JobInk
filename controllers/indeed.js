@@ -11,7 +11,7 @@ var getReviews = require("../scripts/glassdoorapi");
 var Indeed = require("../models/Indeed");
 
 module.exports = {
-	fetch: function (jobTitle, jobLocation, cb) 
+	fetch: function (jobTitle, jobLocation, userid, cb) 
 	{
 		getjobs(jobTitle, jobLocation, function(data)
 		{
@@ -19,7 +19,9 @@ module.exports = {
 			for (var i=0; i < data.results.length; i++)
 			{
 				var job = {};
+
 				job.jobkey = data.results[i].jobkey;
+				job.userid = userid;
 				job.jobtitle = data.results[i].jobtitle;
 				job.snippet = data.results[i].snippet;
 				job.company = data.results[i].company;
@@ -44,12 +46,17 @@ module.exports = {
 			});
 		});
 	},
-	delete: function(query, cb)
-	{
+
+	delete: function(query, userid, cb)
+	{	
+		query.userid = userid;
 		Indeed.remove(query, cb);
 	},
-	get: function(query, cb)
+
+	get: function(query, userid, cb)
 	{
+		//query.combokey = {};
+		query.userid = userid;
 		Indeed.find(query)
 		.sort({
 			_id: -1
@@ -59,9 +66,11 @@ module.exports = {
 			cb(doc);
 		});
 	},
-	update: function(query, cb)
+
+	//glassdoor rating query
+	update: function(query, userid, cb)
 	{
-		Indeed.findById(query._id, function(error, found)
+		Indeed.findOne({_id:query._id, userid:userid}, function(error, found)
 		{
 			getReviews(found.company, found.location, function(data)
 			{
@@ -74,7 +83,7 @@ module.exports = {
 					rating = data.response.employers[0].overallRating;
 				}
 
-				Indeed.update({_id: query._id}, {
+				Indeed.update({_id: query._id, userid:userid}, {
 				$set: query,
 				glassurl: glassurl,
 				rating: rating

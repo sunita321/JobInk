@@ -4,6 +4,7 @@ var indeedController = require("../controllers/indeed");
 var notesController = require("../controllers/notes");
 
 var passport = require('passport');
+var ensureLoggedIn = require('connect-ensure-login').ensureLoggedIn();
 
 var env = {
   AUTH0_CLIENT_ID: process.env.AUTH0_CLIENT_ID,
@@ -16,17 +17,14 @@ var env = {
 module.exports = function(router)
 {
 		/* GET home page. */
-	router.get('/auth0', function(req, res, next) {
-	  res.render('index', { title: 'Express', env: env });
-	});
 
-
-	router.get("/", function(req, res)
+	router.get("/", ensureLoggedIn, function(req, res)
 	{
 		res.render("home");
+		console.log(req.user);
 	});
 
-	router.get("/saved", function(req, res)
+	router.get("/saved", ensureLoggedIn, function(req, res)
 	{
 		res.render("saved");
 	});
@@ -48,9 +46,9 @@ module.exports = function(router)
 	  });
 
 
-	router.get("/api/fetch", function(req, res)
+	router.get("/api/fetch", ensureLoggedIn, function(req, res)
 	{
-		indeedController.fetch(req.query.jobTitle, req.query.jobLocation,function(err, docs)
+		indeedController.fetch(req.query.jobTitle, req.query.jobLocation, req.user.id, function(err, docs)
 		{
 			if (!docs || docs.insertedCount === 0)
 			{
@@ -67,40 +65,40 @@ module.exports = function(router)
 		});
 	});
 
-	router.get("/api/indeed", function(req, res)
+	router.get("/api/indeed", ensureLoggedIn, function(req, res)
 	{
 		var query = {};
-		if (req.query.saved) 
+		if (req.query.saved) // If we only want saved jobs
 		{
 			query = req.query;
 		}
 
-		indeedController.get(query, function(data)
+		indeedController.get(query, req.user.id, function(data)
 		{
 			res.json(data);
 		});
 	});
 
-	router.delete("/api/indeed/:id", function(req, res)
+	router.delete("/api/indeed/:id", ensureLoggedIn, function(req, res)
 	{
 		var query = {};
 		query._id = req.params.id;
-		indeedController.delete(query, function(err, data)
+		indeedController.delete(query, req.user.id, function(err, data)
 		{
 			res.json(data);
 		});
 	});
 
-	router.patch("/api/indeed", function(req, res)
+	router.patch("/api/indeed", ensureLoggedIn, function(req, res)
 	{
-		indeedController.update(req.body, function(err, data)
+		indeedController.update(req.body, req.user.id, function(err, data)
 		{
 			res.json(data);
 		});
 	});
 
 	//Route to get Notes
-	router.get("/api/notes/:indeed_id?", function(req, res)
+	router.get("/api/notes/:indeed_id?", ensureLoggedIn, function(req, res)
 	{
 		
 		var query ={};
@@ -109,29 +107,29 @@ module.exports = function(router)
 			query._jobkeyID = req.params.indeed_id;
 		}
 
-		notesController.get(query, function(err, data)
+		notesController.get(query, req.user.id, function(err, data)
 		{
 			res.json(data);
 		});
 	});
 
 	//Route to Delete Notes
-	router.delete("/api/notes/:id", function(req, res)
+	router.delete("/api/notes/:id", ensureLoggedIn, function(req, res)
 	{
 		console.log("serverD");
 		var query = {};
 		query._id = req.params.id;
 		console.log(query._id);
-		notesController.delete(query, function(err, data)
+		notesController.delete(query, req.user.id, function(err, data)
 		{
 			res.json(data);
 		});
 	});
 
 	//Route to Post new Notes
-	router.post("/api/notes", function(req, res)
+	router.post("/api/notes", ensureLoggedIn, function(req, res)
 	{
-		notesController.save(req.body, function(data)
+		notesController.save(req.body, req.user.id, function(data)
 		{
 			res.json(data);
 		});
@@ -139,12 +137,12 @@ module.exports = function(router)
 
 	//Route to Clear Search Results that are NOT saved
 
-	router.delete("/api/clear", function(req, res)
+	router.delete("/api/clear", ensureLoggedIn, function(req, res)
 	{
 		console.log("serverClear");
 		var query = {};
 		query.saved = false;
-		indeedController.delete(query, function(err, data)
+		indeedController.delete(query, req.user.id, function(err, data)
 		{
 			res.json(data);
 		});

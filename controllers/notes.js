@@ -4,16 +4,18 @@ var Notes = require("../models/Notes");
 var makeDate = require("../scripts/date");
 
 module.exports = {
-	get: function(data, cb) 
+	get: function(data, userid, cb) 
 	{
 		Notes.find({
-			_jobkeyID: data._jobkeyID
+			_jobkeyID: data._jobkeyID,
+			userid:userid
 		}, cb);
 	},
-	save: function(data, cb)
+	save: function(data, userid, cb)
 	{
 		var newNote = {
 			_jobkeyID: data._jobkeyID,
+			userid:userid,
 			date: makeDate(),
 			noteText: data.noteText
 		};
@@ -30,10 +32,11 @@ module.exports = {
 			}
 		});
 	},
-	delete: function(data, cb)
+	delete: function(data, userid, cb)
 	{
 		Notes.remove({
-			_id: data._id
+			_id: data._id,
+			userid:userid
 		}, cb);
 	}
 };

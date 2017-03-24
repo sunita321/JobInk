@@ -8,7 +8,14 @@ var notesSchema = new Schema({
 		ref: "Indeed",
 		required:true
 	},
-	
+
+	userid:
+	{
+		type: String,
+		required: true,
+		
+	},
+
 	date: String,
 
 	noteText:{
@@ -16,6 +23,7 @@ var notesSchema = new Schema({
 		required: true,
 		}
 });
+
 
 
 var Notes = mongoose.model("Notes", notesSchema);

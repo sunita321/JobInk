@@ -3,11 +3,20 @@ var mongoose = require("mongoose");
 var Schema = mongoose.Schema;
 
 var indeedJobsSchema = new Schema({
-	jobkey:{
+	
+
+	jobkey:
+	{
 		type: String,
-		required: true,
-		unique: true
+		required: true
 	},
+
+	userid:
+	{
+		type: String,
+		required: true
+	},
+		
 	
 	jobtitle: {
 		type: String,
@@ -51,6 +60,7 @@ var indeedJobsSchema = new Schema({
 	}
 });
 
+indeedJobsSchema.index({jobkey: 1, userid: 1}, {unique: true});
 
 var Indeed = mongoose.model("Indeed", indeedJobsSchema);
 
