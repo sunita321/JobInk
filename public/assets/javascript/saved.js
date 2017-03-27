@@ -8,12 +8,19 @@ $(document).ready(function()
 		$(document).on("click", ".btn.notes", handleJobNotes);
 		$(document).on("click", ".btn.save", handleNoteSave);
 		$(document).on("click", ".btn.note-delete", handleNoteDelete);
+		$(document).on("click", '.btn.note-edit', handleNoteEdit);
+
+
+
 
 		// define the modal
 	    $('#noteModal').modal({
 	    });
 
 		initPage();
+
+		//function to edit note text
+
 
 
 
@@ -155,12 +162,20 @@ $(document).ready(function()
 				currentNote = $([
 					"<div class='divider'></div>",
 					"<div class='col s12 spacer'></div>",
+
 					"<li class='list-group-item note'>",
+
+					"<div class='noteText'>",
 					data.notes[i].noteText,
+					"</div>",
+
+					"<div class='editbutton left-align'>",
+					"<button class='btn btn-floating note-edit orange'><i class='material-icons'>mode_edit</i></button></div>",
 
 					"<div class='deletebutton right-align'>",
 					"<button class='btn btn-floating note-delete red'><i class='material-icons'>delete</i></button></div>",
 					"</li>",
+					
 					"<div class='col s12 spacer'></div>"
 
 					
@@ -168,6 +183,8 @@ $(document).ready(function()
 				].join(""));
 
 				currentNote.children(".deletebutton").children("button").data("_id", data.notes[i]._id);
+				currentNote.children(".editbutton").children("button").data("_id", data.notes[i]._id);
+
 
 
 				notesToRender.push(currentNote);
@@ -240,9 +257,9 @@ $(document).ready(function()
 		var noteToDelete = $(this).data();
 		var getSavedBtnData = $(this).parents("#noteModal").children(".modal-footer").children('#noteForm').children(".btn.save").data();
 
-		console.log(getSavedBtnData);
+		//console.log(getSavedBtnData);
 
-		console.log(noteToDelete._id);
+		//console.log(noteToDelete._id);
 
 		$.ajax({
 			method: "DELETE",
@@ -307,6 +324,56 @@ $(document).ready(function()
 			renderNotesList(noteData);
 		});
 
+	}
+
+	function handleNoteEdit()
+	{
+		var editbuttonElement = $(this);
+		var replaceWith = $('<input name="temp" type="text" />');
+     
+        var elem = $(this).parent("div").parent(".note").children(".noteText");
+
+        var elemOldText = elem.text();
+        //console.log(elemOldText);
+        replaceWith.val(elemOldText);
+        //console.log($(this).data());
+
+        
+
+        //console.log(elem);
+
+        elem.hide();
+        elem.after(replaceWith);
+        replaceWith.focus();
+
+        replaceWith.blur(function() 
+        {
+
+            if ($(this).val() != "") 
+            {
+                //connectWith.val($(this).val()).change();
+                //elem.text($(this).val());
+                var noteToEdit = editbuttonElement.data();
+                var newNoteText = $(this).val();
+				//var getSavedBtnData = $(this).parents("#noteModal").children(".modal-footer").children('#noteForm').children(".btn.save").data();
+
+				//console.log(getSavedBtnData);
+
+				console.log(noteToEdit);
+				noteData = {
+					_id:noteToEdit._id,
+					noteText: newNoteText
+				};
+
+				$.post("/api/notes", noteData).then(function()
+				{
+					elem.text(newNoteText);
+				});
+		    }
+
+            $(this).remove();
+            elem.show();
+        });
 	}
 
 });

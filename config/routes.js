@@ -129,10 +129,22 @@ module.exports = function(router)
 	//Route to Post new Notes
 	router.post("/api/notes", ensureLoggedIn, function(req, res)
 	{
-		notesController.save(req.body, req.user.id, function(data)
+		if(req.body._id)
 		{
+			notesController.update(req.body, req.user.id, function(data)//updates notes
+			{
+				res.json(data);
+			});
+
+		}
+
+		else{
+			notesController.save(req.body, req.user.id, function(data)
+			{
 			res.json(data);
-		});
+			});
+		}
+
 	});
 
 	//Route to Clear Search Results that are NOT saved
