@@ -38,5 +38,19 @@ module.exports = {
 			_id: data._id,
 			userid:userid
 		}, cb);
+	},
+	update: function(data, userid, cb)
+	{
+		Notes.findOneAndUpdate(
+		{
+			_id: data._id,
+			userid:userid
+		},
+		{
+			date: makeDate(),
+			noteText: data.noteText
+		},
+
+		cb);
 	}
 };
