@@ -21,7 +21,7 @@ module.exports = function(router)
 	router.get("/", ensureLoggedIn, function(req, res)
 	{
 		res.render("home");
-		console.log(req.user);
+		//console.log(req.user);
 	});
 
 	router.get("/saved", ensureLoggedIn, function(req, res)
@@ -79,6 +79,7 @@ module.exports = function(router)
 		});
 	});
 
+	//Route to Delete Saved Job
 	router.delete("/api/indeed/:id", ensureLoggedIn, function(req, res)
 	{
 		var query = {};
@@ -89,6 +90,7 @@ module.exports = function(router)
 		});
 	});
 
+	//Route to Delete Note
 	router.patch("/api/indeed", ensureLoggedIn, function(req, res)
 	{
 		indeedController.update(req.body, req.user.id, function(err, data)
