@@ -2,6 +2,25 @@ $(document).ready(function()
 {
 		$(".button-collapse").sideNav();//materialize mobile view nav
 
+		//Scroll to top JS
+	    $(window).scroll(function()
+	    { 
+	    	if ($(this).scrollTop() > 100) 
+	    	{ 
+	        	$('#scroll').fadeIn(); 
+	    	} 
+	    	else { 
+	        $('#scroll').fadeOut(); 
+	    
+	    	} 
+		}); 
+
+		$('#scroll').click(function()
+		{ 
+		    $("html, body").animate({ scrollTop: 0 }, 600); 
+		    return false; 
+		}); 
+
 		var jobContainer = $(".job-container");
 
 		$(document).on("click", ".btn.delete", handleJobDelete);

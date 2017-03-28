@@ -5,7 +5,26 @@ $(document).ready(function()
 	hideLogoS();
 	$(".button-collapse").sideNav();//materialize mobile view nav
 
+	//Scroll to top JS
+    $(window).scroll(function()
+    { 
+    	if ($(this).scrollTop() > 100) 
+    	{ 
+        	$('#scroll').fadeIn(); 
+    	} 
+    	else { 
+        $('#scroll').fadeOut(); 
+    
+    	} 
+	}); 
 
+	$('#scroll').click(function()
+	{ 
+	    $("html, body").animate({ scrollTop: 0 }, 600); 
+	    return false; 
+	}); 
+
+	//Google location autocomplete
 	var autocomplete = new google.maps.places.Autocomplete($('#locationterm')[0], {types: ['(regions)']});
 	// Set div where jobs will go
 	// Add event listener to any "Save Job"
