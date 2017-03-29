@@ -9,8 +9,7 @@ var notesSchema = new Schema({
 		required:true
 	},
 
-	userid:
-	{
+	userid:{
 		type: String,
 		required: true,
 		
@@ -18,10 +17,13 @@ var notesSchema = new Schema({
 
 	date: String,
 
+
 	noteText:{
 		type: String,
 		required: true,
 		}
+
+
 });
 
 

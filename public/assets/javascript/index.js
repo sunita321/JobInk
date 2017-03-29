@@ -2,9 +2,29 @@
 
 $(document).ready(function() 
 {
+	hideLogoS();
 	$(".button-collapse").sideNav();//materialize mobile view nav
 
+	//Scroll to top JS
+    $(window).scroll(function()
+    { 
+    	if ($(this).scrollTop() > 100) 
+    	{ 
+        	$('#scroll').fadeIn(); 
+    	} 
+    	else { 
+        $('#scroll').fadeOut(); 
+    
+    	} 
+	}); 
 
+	$('#scroll').click(function()
+	{ 
+	    $("html, body").animate({ scrollTop: 0 }, 600); 
+	    return false; 
+	}); 
+
+	//Google location autocomplete
 	var autocomplete = new google.maps.places.Autocomplete($('#locationterm')[0], {types: ['(regions)']});
 	// Set div where jobs will go
 	// Add event listener to any "Save Job"
@@ -17,7 +37,10 @@ $(document).ready(function()
 	//Clear all unsaved search results
 	$('#clear-results').on("click", handleClearResults);
 
+
+
 	initPage();
+
 
 	function initPage()
 	{
@@ -42,6 +65,8 @@ $(document).ready(function()
 
 	function renderJobs(jobs)
 	{
+		hideLogoL();
+		showLogoS();
 		//console.log("render1");
 		var jobPanels = [];
 
@@ -52,6 +77,9 @@ $(document).ready(function()
 		}
 
 		jobContainer.append(jobPanels);
+
+		
+		
 		//console.log("render3");
 	}
 
@@ -97,6 +125,7 @@ $(document).ready(function()
 
 	function renderEmpty()
 	{
+		hideLogoS();
 		var emptyAlert = $(
 			[
 				"<div class='row'>",
@@ -118,6 +147,9 @@ $(document).ready(function()
 			].join(""));
 
 		jobContainer.append(emptyAlert);
+
+		showLogoL();
+
 	}
 
 	function handleJobSave()
@@ -199,8 +231,36 @@ $(document).ready(function()
 
 	}
 
+	//Show and hide large logo
+
+	function hideLogoL()
+	{
+        $(".logo").css({"display":"none"});
+        $("#jobinkheader").css({"display":"none"});
+        
+	}
+
+	function showLogoL()
+	{
+        $(".logo").css({"display":"inline"});
+        $("#jobinkheader").css({"display":"inline"});
+	}
+
+    //Show and hide small logo
+    function hideLogoS()
+	{
+        //$("#smallLogo").hide();
+        $(".shrunkLogo").css({"display":"none"});
+        $(".smallHeader").css({"display":"none"});
+	}
+
+	function showLogoS()
+	{
+        //$("#smallLogo").show();
+        $(".smallHeader").css({"display":"inline"});
+        $(".shrunkLogo").css({"display":"inline"});
+	}
 
 
 
 });
-

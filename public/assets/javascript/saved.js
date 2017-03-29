@@ -1,6 +1,25 @@
 $(document).ready(function()
-{
+{	
 		$(".button-collapse").sideNav();//materialize mobile view nav
+
+		//Scroll to top JS
+	    $(window).scroll(function()
+	    { 
+	    	if ($(this).scrollTop() > 100) 
+	    	{ 
+	        	$('#scroll').fadeIn(); 
+	    	} 
+	    	else { 
+	        $('#scroll').fadeOut(); 
+	    
+	    	} 
+		}); 
+
+		$('#scroll').click(function()
+		{ 
+		    $("html, body").animate({ scrollTop: 0 }, 600); 
+		    return false; 
+		}); 
 
 		var jobContainer = $(".job-container");
 
@@ -9,6 +28,7 @@ $(document).ready(function()
 		$(document).on("click", ".btn.save", handleNoteSave);
 		$(document).on("click", ".btn.note-delete", handleNoteDelete);
 		$(document).on("click", '.btn.note-edit', handleNoteEdit);
+		$(document).on("change",".checkBoxClass", handleAppliedBox);
 
 
 
@@ -64,20 +84,35 @@ $(document).ready(function()
 				"<div class='divider'></div>",
 				
 				"<div class='panel panel-default'>",
-				"<div class='panel-heading'>",
-				"<h5>",
-				"<a href='",
-				job.url,
-				"'target='_blank'>",
-				job.jobtitle,
-				"</h5>",
-				"</a>",
+					"<div class='panel-heading'>",
 
+						"<div class='headerBox left-align'>",		
+							"<h5>",
+							"<a href='",
+							job.url,
+							"'target='_blank'>",
+							job.jobtitle,
+							"</a>",
+							"</h5>",
+						"</div>",
+
+				"<div class='appliedBox right-align'>",
+
+				"<input class='checkBoxClass' type='checkbox' id='appliedBox_"+job._id+"'/>",
+      			"<label for='appliedBox_"+job._id+"'>Applied</label>",
+      			"</div>",
+				
+
+
+
+				
 				"<div class='panel-body'>",
 				job.snippet,
+
 				"<div class='companyText'>",
 				"Company: " + job.company,
 				"</div>",
+
 				"<div class='companyRating'>",
 				"<a href='",
 				job.glassurl,
@@ -85,6 +120,7 @@ $(document).ready(function()
 				"Company Rating: " + job.rating + " out of 5 stars",
 				"</a>",
 				"</div>",
+
 				"<div class='locationText'>",
 				job.location,
 				"</div>",
@@ -107,6 +143,9 @@ $(document).ready(function()
 			].join(""));
 
 		panel.data("job", job);
+
+		panel.find('.checkBoxClass').prop('checked', job.applied);
+		//console.log(panel.children('.checkBoxClass'));
 
 		return panel;
 	}
@@ -169,6 +208,10 @@ $(document).ready(function()
 					data.notes[i].noteText,
 					"</div>",
 
+					"<div class='noteDate right-align'>",
+					moment(data.notes[i].date).format("ddd, MMMM Do, YYYY, hh:mm A"),
+					"</div>",
+
 					"<div class='editbutton left-align'>",
 					"<button class='btn btn-floating note-edit orange'><i class='material-icons'>mode_edit</i></button></div>",
 
@@ -217,7 +260,7 @@ $(document).ready(function()
 	function handleNoteSave(event)
 	{
 
-		console.log("Save me!");
+		//console.log("Save me!");
 		var noteData;
 		var newNote = $("#noteText").val().trim();
 
@@ -230,7 +273,7 @@ $(document).ready(function()
 				noteText: newNote
 			};
 
-			console.log("Save me2!");
+			//console.log("Save me2!");
 			$.post("/api/notes", noteData).then(function()
 			{
 				//bootbox.hideAll();
@@ -375,5 +418,30 @@ $(document).ready(function()
             elem.show();
         });
 	}
+
+	
+	function handleAppliedBox()
+
+	{
+		var currentJob = $(this).parents(".panel").data();
+		console.log(currentJob.job._id);
+		var state = $(this).is(':checked');
+		console.log(state);
+		currentJob.job.applied = state;
+		$.ajax({
+			method: "PATCH",
+			url: "/api/indeed",
+			data: currentJob.job
+		})
+		.then(function(data)
+		{
+			if(data.ok)
+			{
+				//show only unsaved articles
+				//initPage();
+			}
+		});
+	}
+
 
 });

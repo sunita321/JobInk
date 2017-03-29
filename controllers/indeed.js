@@ -69,7 +69,7 @@ module.exports = {
 
 	//glassdoor rating query
 	update: function(query, userid, cb)
-	{
+	{ console.log(query);
 		Indeed.findOne({_id:query._id, userid:userid}, function(error, found)
 		{
 			getReviews(found.company, found.location, function(data)
