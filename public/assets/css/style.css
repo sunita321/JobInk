@@ -62,6 +62,19 @@ h4.smallHeader {
 	display: none;
 }
 
+.appliedBox{
+float: right;
+margin-top: 15px;
+}
+
+.headerBox{
+float: left;
+}
+
+.panel-body{
+	clear: both;
+}
+
 /*Scroll Css*/
 
 #scroll {
@@ -90,7 +103,7 @@ h4.smallHeader {
     border-bottom-color:#ffffff;
 }
 #scroll:hover {
-    background-color:#e74c3c;
+    background-color:#ab47bc;
     opacity:1;filter:"alpha(opacity=100)";
     -ms-filter:"alpha(opacity=100)";
 }

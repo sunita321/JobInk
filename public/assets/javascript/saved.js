@@ -1,5 +1,8 @@
 $(document).ready(function()
-{
+{	
+		var now = moment();
+
+		console.log(now);
 		$(".button-collapse").sideNav();//materialize mobile view nav
 
 		//Scroll to top JS
@@ -84,19 +87,34 @@ $(document).ready(function()
 				
 				"<div class='panel panel-default'>",
 				"<div class='panel-heading'>",
+
+				"<div class='headerBox left-align'>",		
 				"<h5>",
 				"<a href='",
 				job.url,
 				"'target='_blank'>",
 				job.jobtitle,
-				"</h5>",
 				"</a>",
+				"</h5>",
+				"</div>",
 
+				"<div class='appliedBox right-align'>",
+
+				"<input type='checkbox' id='appliedBox'/>",
+      			"<label for='appliedBox'>Applied</label>",
+      			"</div>",
+				
+
+
+
+				
 				"<div class='panel-body'>",
 				job.snippet,
+
 				"<div class='companyText'>",
 				"Company: " + job.company,
 				"</div>",
+
 				"<div class='companyRating'>",
 				"<a href='",
 				job.glassurl,
@@ -104,6 +122,7 @@ $(document).ready(function()
 				"Company Rating: " + job.rating + " out of 5 stars",
 				"</a>",
 				"</div>",
+
 				"<div class='locationText'>",
 				job.location,
 				"</div>",
@@ -186,6 +205,10 @@ $(document).ready(function()
 
 					"<div class='noteText'>",
 					data.notes[i].noteText,
+					"</div>",
+
+					"<div class='noteDate right-align'>",
+					moment(data.notes[i].date).format("ddd, MMMM Do, YYYY, hh:mm A"),
 					"</div>",
 
 					"<div class='editbutton left-align'>",
