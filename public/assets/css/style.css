@@ -103,7 +103,7 @@ float: left;
     border-bottom-color:#ffffff;
 }
 #scroll:hover {
-    background-color:#ab47bc;
+    background-color:#90caf9;
     opacity:1;filter:"alpha(opacity=100)";
     -ms-filter:"alpha(opacity=100)";
 }

@@ -57,6 +57,11 @@ var indeedJobsSchema = new Schema({
 
 	rating:{
 		type: String
+	},
+	
+	applied:{
+		type: Boolean,
+		default: false,
 	}
 });
 

@@ -1,85 +1,92 @@
-$(document).ready(function()
+//Display Jobs on Homepage
+
+$(document).ready(function() 
 {
-		$(".button-collapse").sideNav();//materialize mobile view nav
+	hideLogoS();
+	$(".button-collapse").sideNav();//materialize mobile view nav
 
-		//Scroll to top JS
-	    $(window).scroll(function()
-	    { 
-	    	if ($(this).scrollTop() > 100) 
-	    	{ 
-	        	$('#scroll').fadeIn(); 
-	    	} 
-	    	else { 
-	        $('#scroll').fadeOut(); 
-	    
-	    	} 
-		}); 
+	//Scroll to top JS
+    $(window).scroll(function()
+    { 
+    	if ($(this).scrollTop() > 100) 
+    	{ 
+        	$('#scroll').fadeIn(); 
+    	} 
+    	else { 
+        $('#scroll').fadeOut(); 
+    
+    	} 
+	}); 
 
-		$('#scroll').click(function()
-		{ 
-		    $("html, body").animate({ scrollTop: 0 }, 600); 
-		    return false; 
-		}); 
+	$('#scroll').click(function()
+	{ 
+	    $("html, body").animate({ scrollTop: 0 }, 600); 
+	    return false; 
+	}); 
 
-		var jobContainer = $(".job-container");
+	//Google location autocomplete
+	var autocomplete = new google.maps.places.Autocomplete($('#locationterm')[0], {types: ['(regions)']});
+	// Set div where jobs will go
+	// Add event listener to any "Save Job"
+	// Import new jobs
+	var jobContainer = $(".job-container");
+	$(document).on("click", ".btn.save", handleJobSave);
+	//$(document).on("click", ".search-new", handleJobSearch);
+	$('#formjobsearch').validator().on('submit', handleJobSearch);
 
-		$(document).on("click", ".btn.delete", handleJobDelete);
-		$(document).on("click", ".btn.notes", handleJobNotes);
-		$(document).on("click", ".btn.save", handleNoteSave);
-		$(document).on("click", ".btn.note-delete", handleNoteDelete);
-		$(document).on("click", '.btn.note-edit', handleNoteEdit);
-
-
-
-
-		// define the modal
-	    $('#noteModal').modal({
-	    });
-
-		initPage();
-
-		//function to edit note text
+	//Clear all unsaved search results
+	$('#clear-results').on("click", handleClearResults);
 
 
 
-
-
-
+	initPage();
 
 
 	function initPage()
 	{
+		
 		jobContainer.empty();
-		$.get("/api/indeed?saved=true")
+		$.get("/api/indeed?saved=false")
 		 .then(function(data)
 		 {
+		 
 		 	if (data && data.length)
 		 	{
+		 		//console.log(data);
 		 		renderJobs(data);
+		 		
 		 	}
 		 	else {
 		 		renderEmpty();
+		 		//console.log("I'm Empty");
 		 	}
 		 });
 	}
 
 	function renderJobs(jobs)
 	{
+		hideLogoL();
+		showLogoS();
+		//console.log("render1");
 		var jobPanels = [];
 
 		for (var i = 0; i < jobs.length; i++) 
 		{
+			//console.log("render2:" +i);
 			jobPanels.push(createPanel(jobs[i]));
 		}
 
 		jobContainer.append(jobPanels);
+
+		
+		
+		//console.log("render3");
 	}
 
 	function createPanel(job)
 	{
-
 		var panel = $(
-			[
+			[	
 				"<div class='divider'></div>",
 				
 				"<div class='panel panel-default'>",
@@ -94,305 +101,166 @@ $(document).ready(function()
 
 				"<div class='panel-body'>",
 				job.snippet,
-				"<div class='companyText'>",
-				"Company: " + job.company,
 				"</div>",
-				"<div class='companyRating'>",
-				"<a href='",
-				job.glassurl,
-				"'target='_blank'>",
-				"Company Rating: " + job.rating + " out of 5 stars",
 				"</a>",
-				"</div>",
-				"<div class='locationText'>",
-				job.location,
-				"</div>",
-				"<a class='btn btn-floating waves-effect waves-light blue notes'>",
-				"<i class='material-icons'>note_add</i>",
-				"</a>",
-				"<div class='deletebutton right-align'>",
-				"<a class='btn btn-floating waves-effect waves-light red delete'>",
-				"<i class='material-icons'>delete_forever</i>",
-				"</a>",
-				"</div>",
-				"</div>",
+				"<a class='btn btn-success waves-effect waves-light save savejob'>",
+				"<i class='material-icons right'>thumb_up</i>",
 
-
+				"Save Job",
+				"</a>",
 
 				"</div>",
 				"<div class='col s12 spacer'></div>",
-				"</div>"
+
+				"</div>",
+				
 
 			].join(""));
 
-		panel.data("job", job);
+		panel.data("_id", job._id);
 
 		return panel;
 	}
 
+
 	function renderEmpty()
 	{
+		hideLogoS();
 		var emptyAlert = $(
 			[
-			     "<div class='row'>",
+				"<div class='row'>",
 			       "<div class='col s3'></div>",
 			        "<div class='col s6'>",
 			          "<div class='card-panel'>",
 			            "<div class='card-content blue-text center-align'>",
-			              "<span class='card-title'>You don't have any jobs saved.</span>",
-			              "<p>Would you like to see available jobs?</p>",
+			              "<span class='card-title'>No search results to display.</span>",
+			              "<p>Try using the search above to find new jobs.</p>",
+			              "<p>Or</p>",
+			              "<h5><a href='/saved'>Go to your Saved Jobs</a></h5>",
 			            "</div>",
 			             "<div class='card-action center-align'>",
-			            "<h4><a href='/'>View Jobs</a></h4>",
+		
 
-
-			      "<div class='col s3'></div>",
-
-				"<div class='panel-body text-center'>",
-
-
-				
 				"</div>",
 				"</div>"
 
 			].join(""));
 
 		jobContainer.append(emptyAlert);
-	}
 
-	function renderNotesList(data)
-	{
-		$(".note-container").empty();
-		var notesToRender = [];
-		var currentNote; 
-		if (!data.notes.length)
-		{
-			currentNote = [
-			"<li class='list-group-item'>",
-			"No notes for this job yet.",
-			"</li>"
-			].join("");
-
-			notesToRender.push(currentNote);
-		}
-		else {
-			for (var i = 0; i < data.notes.length; i++) 
-			{
-				currentNote = $([
-					"<div class='divider'></div>",
-					"<div class='col s12 spacer'></div>",
-
-					"<li class='list-group-item note'>",
-
-					"<div class='noteText'>",
-					data.notes[i].noteText,
-					"</div>",
-
-					"<div class='editbutton left-align'>",
-					"<button class='btn btn-floating note-edit orange'><i class='material-icons'>mode_edit</i></button></div>",
-
-					"<div class='deletebutton right-align'>",
-					"<button class='btn btn-floating note-delete red'><i class='material-icons'>delete</i></button></div>",
-					"</li>",
-					
-					"<div class='col s12 spacer'></div>"
-
-					
-					
-				].join(""));
-
-				currentNote.children(".deletebutton").children("button").data("_id", data.notes[i]._id);
-				currentNote.children(".editbutton").children("button").data("_id", data.notes[i]._id);
-
-
-
-				notesToRender.push(currentNote);
-
-			}
-		}
-
-		$(".note-container").append(notesToRender);
-
+		showLogoL();
 
 	}
 
-	function handleJobDelete()
+	function handleJobSave()
 	{
-		var jobToDelete = $(this).parents(".panel").data();
+		var jobToSave = $(this).parents(".panel").data();
+		jobToSave.saved = true;
 
 		$.ajax({
-			method: "DELETE",
-			url: "/api/indeed/" + jobToDelete.job._id
-		}).then(function(data)
+			method: "PATCH",
+			url: "/api/indeed",
+			data: jobToSave
+		})
+		.then(function(data)
 		{
-			if (data.ok)
+			if(data.ok)
 			{
+				//show only unsaved articles
 				initPage();
 			}
 		});
 	}
 
 
-	function handleNoteSave(event)
+	function handleJobSearch(event)
 	{
+		var title = $('#jobterm').val().trim();
+		var location = $('#locationterm').val().trim();
+		//var autocomplete = new google.maps.places.Autocomplete(location);
 
-		console.log("Save me!");
-		var noteData;
-		var newNote = $("#noteText").val().trim();
 
-		event.preventDefault();
-
-		if (newNote)
+		if(event.isDefaultPrevented())
 		{
-			noteData = {
-				_jobkeyID: $(this).data("job")._id,
-				noteText: newNote
-			};
 
-			console.log("Save me2!");
-			$.post("/api/notes", noteData).then(function()
-			{
-				//bootbox.hideAll();
-				$.get("/api/notes/" + noteData._jobkeyID).then(function(data)
-				{
-					var noteList = {
-						_id: noteData._jobkeyID,
-						notes: data || []
-					};
-
-					renderNotesList(noteList);
-					$("#noteText").val('');
-				});
-			});
 		}
+		else 
+		{
+
+			event.preventDefault();
+
+
+			$.get({url:"api/fetch",
+				data: {jobTitle: title,
+					jobLocation: location,
+
+				}})
+			.then(function(data)
+			{
+				initPage();
+				Materialize.toast("<p class='text-center m-top-80'>" + data.message + "</p>", 4000, 'rounded');
+
+			
+			
+				//bootbox.alert("<h3 class='text-center m-top-80'>" + data.message + "<h3>");
+			});
+
+		}
+	
+
+
 	}
 
-
-
-
-
-	function handleNoteDelete()
+	function handleClearResults(event)
 	{
-		var noteToDelete = $(this).data();
-		var getSavedBtnData = $(this).parents("#noteModal").children(".modal-footer").children('#noteForm').children(".btn.save").data();
-
-		//console.log(getSavedBtnData);
-
-		//console.log(noteToDelete._id);
+		console.log("clear1");
+		event.preventDefault();
 
 		$.ajax({
 			method: "DELETE",
-			url: "/api/notes/" + noteToDelete._id
+			url: "/api/clear"
 		}).then(function(data)
 		{
 			console.log(data);
 			if (data.ok)
 			{
-				
-				//initPage();
-				$.get("/api/notes/" + getSavedBtnData.job._id).then(function(data)
-				{
-					console.log(noteToDelete);
-					var noteList = {
-						_id: getSavedBtnData.job._id, 
-						notes: data || []
-					};
-
-					renderNotesList(noteList);
-				});
+				initPage();
+				Materialize.toast("<p class='text-center m-top-80'>All search results cleared!</p>", 4000, 'rounded');
 			}
 		});
-	}
-
-	function handleJobNotes()
-	{
-		var currentJob = $(this).parents(".panel").data();
-
-		$.get("/api/notes/" + currentJob.job._id).then(function(data)
-		{
-			console.log(data);
-			$('#notesTitle').html("<h5>Notes for: " + currentJob.job.jobtitle + "</h5>");
-			var modalText = [
-			"<div class='container-fluid text-center' id='notesdiv'>",
-			"<hr />",
-			"<div class='text-left'>",
-			"<ul class='list-group note-container'>",
-			//"<li>"+data[0].noteText+"</li>",
-			"</ul></div>",
-			"<textarea placeholder='New Note' rows='4' cols='60'></textarea>",
-			"<button class='btn btn-success save'>Save Note</button>",
-			"</div>"
-			].join("");
-
-				// open the modal
-	        $('#noteModal').modal('open');
-
-
-			/*bootbox.dialog({
-				message: modalText,
-				closeButton: true
-			});*/
-
-			var noteData = {
-				_id: currentJob.job._id,
-				notes: data || []
-			};
-
-			$(".btn.save").data("job", noteData);
-
-			renderNotesList(noteData);
-		});
 
 	}
 
-	function handleNoteEdit()
+	//Show and hide large logo
+
+	function hideLogoL()
 	{
-		var editbuttonElement = $(this);
-		var replaceWith = $('<input name="temp" type="text" />');
-     
-        var elem = $(this).parent("div").parent(".note").children(".noteText");
-
-        var elemOldText = elem.text();
-        //console.log(elemOldText);
-        replaceWith.val(elemOldText);
-        //console.log($(this).data());
-
+        $(".logo").css({"display":"none"});
+        $("#jobinkheader").css({"display":"none"});
         
-
-        //console.log(elem);
-
-        elem.hide();
-        elem.after(replaceWith);
-        replaceWith.focus();
-
-        replaceWith.blur(function() 
-        {
-
-            if ($(this).val() != "") 
-            {
-                //connectWith.val($(this).val()).change();
-                //elem.text($(this).val());
-                var noteToEdit = editbuttonElement.data();
-                var newNoteText = $(this).val();
-				//var getSavedBtnData = $(this).parents("#noteModal").children(".modal-footer").children('#noteForm').children(".btn.save").data();
-
-				//console.log(getSavedBtnData);
-
-				console.log(noteToEdit);
-				noteData = {
-					_id:noteToEdit._id,
-					noteText: newNoteText
-				};
-
-				$.post("/api/notes", noteData).then(function()
-				{
-					elem.text(newNoteText);
-				});
-		    }
-
-            $(this).remove();
-            elem.show();
-        });
 	}
+
+	function showLogoL()
+	{
+        $(".logo").css({"display":"inline"});
+        $("#jobinkheader").css({"display":"inline"});
+	}
+
+    //Show and hide small logo
+    function hideLogoS()
+	{
+        //$("#smallLogo").hide();
+        $(".shrunkLogo").css({"display":"none"});
+        $(".smallHeader").css({"display":"none"});
+	}
+
+	function showLogoS()
+	{
+        //$("#smallLogo").show();
+        $(".smallHeader").css({"display":"inline"});
+        $(".shrunkLogo").css({"display":"inline"});
+	}
+
+
 
 });

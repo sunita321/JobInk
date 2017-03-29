@@ -1,8 +1,5 @@
 $(document).ready(function()
 {	
-		var now = moment();
-
-		console.log(now);
 		$(".button-collapse").sideNav();//materialize mobile view nav
 
 		//Scroll to top JS
@@ -31,6 +28,7 @@ $(document).ready(function()
 		$(document).on("click", ".btn.save", handleNoteSave);
 		$(document).on("click", ".btn.note-delete", handleNoteDelete);
 		$(document).on("click", '.btn.note-edit', handleNoteEdit);
+		$(document).on("change",".checkBoxClass", handleAppliedBox);
 
 
 
@@ -86,22 +84,22 @@ $(document).ready(function()
 				"<div class='divider'></div>",
 				
 				"<div class='panel panel-default'>",
-				"<div class='panel-heading'>",
+					"<div class='panel-heading'>",
 
-				"<div class='headerBox left-align'>",		
-				"<h5>",
-				"<a href='",
-				job.url,
-				"'target='_blank'>",
-				job.jobtitle,
-				"</a>",
-				"</h5>",
-				"</div>",
+						"<div class='headerBox left-align'>",		
+							"<h5>",
+							"<a href='",
+							job.url,
+							"'target='_blank'>",
+							job.jobtitle,
+							"</a>",
+							"</h5>",
+						"</div>",
 
 				"<div class='appliedBox right-align'>",
 
-				"<input type='checkbox' id='appliedBox'/>",
-      			"<label for='appliedBox'>Applied</label>",
+				"<input class='checkBoxClass' type='checkbox' id='appliedBox_"+job._id+"'/>",
+      			"<label for='appliedBox_"+job._id+"'>Applied</label>",
       			"</div>",
 				
 
@@ -145,6 +143,9 @@ $(document).ready(function()
 			].join(""));
 
 		panel.data("job", job);
+
+		panel.find('.checkBoxClass').prop('checked', job.applied);
+		//console.log(panel.children('.checkBoxClass'));
 
 		return panel;
 	}
@@ -259,7 +260,7 @@ $(document).ready(function()
 	function handleNoteSave(event)
 	{
 
-		console.log("Save me!");
+		//console.log("Save me!");
 		var noteData;
 		var newNote = $("#noteText").val().trim();
 
@@ -272,7 +273,7 @@ $(document).ready(function()
 				noteText: newNote
 			};
 
-			console.log("Save me2!");
+			//console.log("Save me2!");
 			$.post("/api/notes", noteData).then(function()
 			{
 				//bootbox.hideAll();
@@ -417,5 +418,30 @@ $(document).ready(function()
             elem.show();
         });
 	}
+
+	
+	function handleAppliedBox()
+
+	{
+		var currentJob = $(this).parents(".panel").data();
+		console.log(currentJob.job._id);
+		var state = $(this).is(':checked');
+		console.log(state);
+		currentJob.job.applied = state;
+		$.ajax({
+			method: "PATCH",
+			url: "/api/indeed",
+			data: currentJob.job
+		})
+		.then(function(data)
+		{
+			if(data.ok)
+			{
+				//show only unsaved articles
+				//initPage();
+			}
+		});
+	}
+
 
 });

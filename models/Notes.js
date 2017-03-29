@@ -17,15 +17,12 @@ var notesSchema = new Schema({
 
 	date: String,
 
+
 	noteText:{
 		type: String,
 		required: true,
-		},
+		}
 
-	applied:{
-		type: Boolean,
-		default: false,
-	}
 
 });
 
