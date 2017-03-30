@@ -38,7 +38,7 @@ module.exports = {
 
 				
 			}
-			console.log(jobs);
+			//console.log(jobs);
 
 			Indeed.collection.insertMany(jobs, {ordered:false}, function(err, docs)
 			{
@@ -78,7 +78,7 @@ module.exports = {
 				var rating ="";
 				if (data && data.response.totalRecordCount>0)
 				{
-					console.log("Glassdoor: " + data);
+					//console.log("Glassdoor: " + data);
 					glassurl = data.response.attributionURL;
 					rating = data.response.employers[0].overallRating;
 				}
@@ -93,7 +93,7 @@ module.exports = {
 				
 			});
 		});
-		console.log(query);
+		//console.log(query);
 		//get glassdoor reviews
 
 

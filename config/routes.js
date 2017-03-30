@@ -2,8 +2,9 @@ var getjobs = require("../scripts/getjobs");
 
 var indeedController = require("../controllers/indeed");
 var notesController = require("../controllers/notes");
+var settingsController = require("../controllers/setting");
 
-var passport = require('passport');
+var passport = require('passport');//Passport JS
 var ensureLoggedIn = require('connect-ensure-login').ensureLoggedIn();
 
 var env = {
@@ -27,6 +28,12 @@ module.exports = function(router)
 	router.get("/saved", ensureLoggedIn, function(req, res)
 	{
 		res.render("saved");
+	});
+
+	//Route to user settings
+	router.get("/settings", ensureLoggedIn, function(req, res)
+	{
+		res.render("settings");
 	});
 
 	router.get('/login',
@@ -159,6 +166,28 @@ module.exports = function(router)
 		indeedController.delete(query, req.user.id, function(err, data)
 		{
 			res.json(data);
+		});
+	});
+
+
+	//API Routes for user settings
+	router.get("/api/address", ensureLoggedIn, function(req, res)
+	{
+		settingsController.get(req.user.id, function(err, data)
+		{
+			res.json(data);
+			console.log("I got here");
+		});
+
+	});
+
+	router.post("/api/addressPost", ensureLoggedIn, function(req, res)
+	{
+
+		settingsController.update(req.body.address, req.user.id, function(data)
+		{
+			res.json(data);
+			console.log("I got post here");
 		});
 	});
 

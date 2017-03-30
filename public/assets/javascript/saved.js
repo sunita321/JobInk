@@ -1,5 +1,7 @@
 $(document).ready(function()
 {	
+
+		$('.tooltipped').tooltip({delay: 50});//materialize tooltip
 		$(".button-collapse").sideNav();//materialize mobile view nav
 
 		//Scroll to top JS
@@ -124,7 +126,7 @@ $(document).ready(function()
 				"<div class='locationText'>",
 				job.location,
 				"</div>",
-				"<a class='btn btn-floating waves-effect waves-light blue notes'>",
+				"<a class='btn btn-floating waves-effect waves-light blue notes tooltipped' data-position='bottom' data-delay='50' data-tooltip='Add a note'>",
 				"<i class='material-icons'>note_add</i>",
 				"</a>",
 				"<div class='deletebutton right-align'>",
@@ -309,14 +311,14 @@ $(document).ready(function()
 			url: "/api/notes/" + noteToDelete._id
 		}).then(function(data)
 		{
-			console.log(data);
+			//console.log(data);
 			if (data.ok)
 			{
 				
 				//initPage();
 				$.get("/api/notes/" + getSavedBtnData.job._id).then(function(data)
 				{
-					console.log(noteToDelete);
+					//console.log(noteToDelete);
 					var noteList = {
 						_id: getSavedBtnData.job._id, 
 						notes: data || []
@@ -334,7 +336,7 @@ $(document).ready(function()
 
 		$.get("/api/notes/" + currentJob.job._id).then(function(data)
 		{
-			console.log(data);
+			//console.log(data);
 			$('#notesTitle').html("<h5>Notes for: " + currentJob.job.jobtitle + "</h5>");
 			var modalText = [
 			"<div class='container-fluid text-center' id='notesdiv'>",
@@ -402,7 +404,7 @@ $(document).ready(function()
 
 				//console.log(getSavedBtnData);
 
-				console.log(noteToEdit);
+				//console.log(noteToEdit);
 				noteData = {
 					_id:noteToEdit._id,
 					noteText: newNoteText
@@ -424,9 +426,9 @@ $(document).ready(function()
 
 	{
 		var currentJob = $(this).parents(".panel").data();
-		console.log(currentJob.job._id);
+		//console.log(currentJob.job._id);
 		var state = $(this).is(':checked');
-		console.log(state);
+		//console.log(state);
 		currentJob.job.applied = state;
 		$.ajax({
 			method: "PATCH",
