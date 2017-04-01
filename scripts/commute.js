@@ -11,7 +11,7 @@ var commuteReturn = function (userAddress, company, companyLocation, cb)
 		if (!error && response.statusCode === 200)
 		{
 			var commuteResults = JSON.parse(body);
-			console.log(commuteResults);
+			//console.log(commuteResults);
 			cb(commuteResults);
 		}
 		else{

@@ -5,8 +5,9 @@ $(document).ready(function()
 
 	$('#save-address').on("click", handleSaveAddress);
 
-	function handleSaveAddress()
+	function handleSaveAddress(event)
 	{
+		event.preventDefault();
 		var userAddress = $('#useraddress').val().trim();
 		console.log(userAddress);
 

@@ -126,6 +126,12 @@ $(document).ready(function()
 				"<div class='locationText'>",
 				job.location,
 				"</div>",
+
+				"<div class='commuteTime'>",
+				"Estimated Commute Time: " + job.commutetime,
+				"</div>",
+
+
 				"<a class='btn btn-floating waves-effect waves-light blue notes tooltipped' data-position='bottom' data-delay='50' data-tooltip='Add a note'>",
 				"<i class='material-icons'>note_add</i>",
 				"</a>",

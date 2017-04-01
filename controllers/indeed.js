@@ -6,9 +6,14 @@ var makeDate = require("../scripts/date");
 
 var getReviews = require("../scripts/glassdoorapi");
 
+var getCommute = require("../scripts/commute");
+
 //Birng in Indeed and Notes models
 
 var Indeed = require("../models/Indeed");
+
+//Bring in User Address setting Model
+var Settings = require("../models/Settings");
 
 module.exports = {
 	fetch: function (jobTitle, jobLocation, userid, cb) 
@@ -69,30 +74,56 @@ module.exports = {
 
 	//glassdoor rating query
 	update: function(query, userid, cb)
-	{ console.log(query);
-		Indeed.findOne({_id:query._id, userid:userid}, function(error, found)
+	{ //console.log(query);
+		Settings.findOne({userid:userid}, function(errorAddress, foundAddress)
 		{
-			getReviews(found.company, found.location, function(data)
+
+			Indeed.findOne({_id:query._id, userid:userid}, function(error, found)
 			{
-				var glassurl ="";
-				var rating ="";
-				if (data && data.response.totalRecordCount>0)
+				getReviews(found.company, found.location, function(data)
 				{
-					//console.log("Glassdoor: " + data);
-					glassurl = data.response.attributionURL;
-					rating = data.response.employers[0].overallRating;
-				}
+					//Call for commute time from Google API
+					getCommute(foundAddress.address, found.company, found.location, function(dataCommute)
+					{
+						var commuteTime ="Not Available";
+						var glassurl ="";
+						var rating ="";
+						console.log(dataCommute.rows[0].elements[0]);
+						if (dataCommute && dataCommute.rows.length>0 && dataCommute.rows[0].elements.length>0 && 
+							dataCommute.rows[0].elements[0].hasOwnProperty('duration'))
+						{
+							commuteTime = dataCommute.rows[0].elements[0].duration.text;
+							console.log(dataCommute.rows[0].elements[0]);
+						}
 
-				Indeed.update({_id: query._id, userid:userid}, {
-				$set: query,
-				glassurl: glassurl,
-				rating: rating
+						if (data && data.response.totalRecordCount>0)
+						{
+							//console.log("Glassdoor: " + data);
+							glassurl = data.response.attributionURL;
+							rating = data.response.employers[0].overallRating;
+						}
 
-			}, {}, cb);
+						//update database with api result
+						Indeed.update({_id: query._id, userid:userid}, {
+						$set: query,
+						glassurl: glassurl,
+						rating: rating,
+						commutetime: commuteTime
 
-				
+						}, {}, cb);
+
+					});
+
+
+
+
+					
+				});
 			});
+
 		});
+
+
 		//console.log(query);
 		//get glassdoor reviews
 

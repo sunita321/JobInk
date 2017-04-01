@@ -18,7 +18,7 @@ var companyReturn = function (company, companyLocation, cb)
 		{
 			var companyResults = JSON.parse(body);
 			 //console.log(queryURL);
-			 console.log(companyResults);
+			 //console.log(companyResults);
 			 cb(companyResults);
 		}
 		else {
