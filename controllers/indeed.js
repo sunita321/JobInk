@@ -72,7 +72,7 @@ module.exports = {
 		});
 	},
 
-	//glassdoor rating query
+	//Glassdoor rating query
 	update: function(query, userid, cb)
 	{ //console.log(query);
 		Settings.findOne({userid:userid}, function(errorAddress, foundAddress)
@@ -83,7 +83,7 @@ module.exports = {
 				getReviews(found.company, found.location, function(data)
 				{
 					//Call for commute time from Google API
-					getCommute(foundAddress.address, found.company, found.location, function(dataCommute)
+					getCommute(foundAddress.address, found.company, found.location, null, function(dataCommute)
 					{
 						var commuteTime ="Not Available";
 						var glassurl ="";

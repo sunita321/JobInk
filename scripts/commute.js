@@ -1,10 +1,12 @@
 //Google Maps API scripts
 var request = require("request");
 
-var commuteReturn = function (userAddress, company, companyLocation, cb) 
+var commuteReturn = function (userAddress, company, companyLocation, tag, cb) 
 {
 	//Google Maps API URL
-	var queryURL = "https://maps.googleapis.com/maps/api/distancematrix/json?origins=" + userAddress + "&destinations=" + company + companyLocation + "&mode=driving&&key=AIzaSyCKSs6cdRZCtA5rEqltKxivrnEQA7VeDOY";
+	var queryURL = "https://maps.googleapis.com/maps/api/distancematrix/json?origins=" + 
+	               userAddress + "&destinations=" + company + companyLocation + 
+	               "&mode=driving&&key=AIzaSyCKSs6cdRZCtA5rEqltKxivrnEQA7VeDOY";
 
 	request(queryURL, function(error, response, body)
 	{
@@ -12,11 +14,11 @@ var commuteReturn = function (userAddress, company, companyLocation, cb)
 		{
 			var commuteResults = JSON.parse(body);
 			//console.log(commuteResults);
-			cb(commuteResults);
+			cb(commuteResults, tag);
 		}
 		else{
 			console.log("Got an error: ", error, ", status code: ", response.statusCode);
-			cb(null);
+			cb(null, tag);
 		}
 	});
 }

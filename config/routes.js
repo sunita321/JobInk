@@ -13,7 +13,8 @@ var env = {
   AUTH0_CALLBACK_URL: process.env.AUTH0_CALLBACK_URL || 'http://localhost:3000/callback'
 };
 
-
+var getCommute = require("../scripts/commute");
+var Indeed = require("../models/Indeed");
 
 module.exports = function(router)
 {
@@ -97,7 +98,7 @@ module.exports = function(router)
 		});
 	});
 
-	//Route to Delete Note
+	//Route to Save job
 	router.patch("/api/indeed", ensureLoggedIn, function(req, res)
 	{
 		indeedController.update(req.body, req.user.id, function(err, data)
@@ -186,8 +187,51 @@ module.exports = function(router)
 
 		settingsController.update(req.body.address, req.user.id, function(data)
 		{
+
 			res.json(data);
 			console.log("I got post here");
+
+		});
+
+		var savedQuery = {saved:true};
+
+
+		indeedController.get(savedQuery, req.user.id, function(data)
+		{
+			var job;
+			for (var i = 0; i < data.length; i++) 
+			{
+				job = data[i];
+				//setTimeout(function()
+				//{
+					console.log("data1" + data[i].jobtitle);
+					getCommute(req.body.address, job.company, job.location, job, function(dataCommute, tag)
+					{
+
+						var commuteTime ="Not Available";
+
+						if (dataCommute && dataCommute.rows.length>0 && dataCommute.rows[0].elements.length>0 && 
+							dataCommute.rows[0].elements[0].hasOwnProperty('duration'))
+						{
+							commuteTime = dataCommute.rows[0].elements[0].duration.text;
+							console.log(dataCommute.rows[0].elements[0]);
+							console.log(commuteTime);
+						}
+
+						Indeed.update({_id: tag._id, userid:req.user.id}, {
+						commutetime: commuteTime
+
+						}, {}, function(){
+							console.log(tag.jobtitle);
+						});
+
+
+					});
+				//}, (100*i));
+				
+
+				console.log("dataI" + data[i].jobtitle);
+			}
 		});
 	});
 
