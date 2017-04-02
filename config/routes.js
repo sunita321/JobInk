@@ -174,10 +174,10 @@ module.exports = function(router)
 	//API Routes for user settings
 	router.get("/api/address", ensureLoggedIn, function(req, res)
 	{
-		settingsController.get(req.user.id, function(err, data)
+		settingsController.get(req.user.id, function(data)
 		{
 			res.json(data);
-			console.log("I got here");
+			console.log(data);
 		});
 
 	});
@@ -189,7 +189,7 @@ module.exports = function(router)
 		{
 
 			res.json(data);
-			console.log("I got post here");
+			//console.log("I got post here");
 
 		});
 

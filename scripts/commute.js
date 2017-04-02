@@ -8,19 +8,28 @@ var commuteReturn = function (userAddress, company, companyLocation, tag, cb)
 	               userAddress + "&destinations=" + company + companyLocation + 
 	               "&mode=driving&&key=AIzaSyCKSs6cdRZCtA5rEqltKxivrnEQA7VeDOY";
 
-	request(queryURL, function(error, response, body)
+	if (userAddress === "")
 	{
-		if (!error && response.statusCode === 200)
+		cb(null, tag);
+	}
+	else {
+		request(queryURL, function(error, response, body)
 		{
-			var commuteResults = JSON.parse(body);
-			//console.log(commuteResults);
-			cb(commuteResults, tag);
-		}
-		else{
-			console.log("Got an error: ", error, ", status code: ", response.statusCode);
-			cb(null, tag);
-		}
-	});
+			if (!error && response.statusCode === 200)
+			{
+				var commuteResults = JSON.parse(body);
+				//console.log(commuteResults);
+				cb(commuteResults, tag);
+			}
+			else{
+				console.log("Got an error: ", error, ", status code: ", response.statusCode);
+				cb(null, tag);
+			}
+		});
+
+	}
+
+
 }
 
 module.exports = commuteReturn;

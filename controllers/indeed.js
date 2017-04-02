@@ -77,6 +77,11 @@ module.exports = {
 	{ //console.log(query);
 		Settings.findOne({userid:userid}, function(errorAddress, foundAddress)
 		{
+			if (foundAddress === null || !foundAddress.hasOwnProperty('address'))
+			{
+				foundAddress ={};
+				foundAddress.address = "";
+			}
 
 			Indeed.findOne({_id:query._id, userid:userid}, function(error, found)
 			{
@@ -88,7 +93,7 @@ module.exports = {
 						var commuteTime ="Not Available";
 						var glassurl ="";
 						var rating ="";
-						console.log(dataCommute.rows[0].elements[0]);
+						//console.log(dataCommute.rows[0].elements[0]);
 						if (dataCommute && dataCommute.rows.length>0 && dataCommute.rows[0].elements.length>0 && 
 							dataCommute.rows[0].elements[0].hasOwnProperty('duration'))
 						{

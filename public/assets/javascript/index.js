@@ -2,6 +2,8 @@
 
 $(document).ready(function() 
 {
+
+
 	hideLogoS();
 	$(".button-collapse").sideNav();//materialize mobile view nav
 
