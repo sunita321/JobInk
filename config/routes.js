@@ -126,10 +126,10 @@ module.exports = function(router)
 	//Route to Delete Notes
 	router.delete("/api/notes/:id", ensureLoggedIn, function(req, res)
 	{
-		console.log("serverD");
+		//console.log("serverD");
 		var query = {};
 		query._id = req.params.id;
-		console.log(query._id);
+		//console.log(query._id);
 		notesController.delete(query, req.user.id, function(err, data)
 		{
 			res.json(data);

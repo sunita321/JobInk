@@ -1,5 +1,6 @@
 $(document).ready(function() 
 {
+	$(".button-collapse").sideNav();//materialize mobile view nav
 	//Google address autocomplete
 	var autocomplete = new google.maps.places.Autocomplete($('#useraddress')[0]);
 

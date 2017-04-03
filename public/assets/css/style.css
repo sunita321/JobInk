@@ -3,22 +3,31 @@ body{
 	font-family: 'Palanquin', sans-serif;
 }
 
+
 img.logo {
     width: 15%;
     height: auto;
   
-
-
+}
+img.navLogo {
+    max-height: 80px!important;
+    padding: 10px 0!important;
+    margin-left: 11%;
+    margin-top: 0px;
 }
 
 .companyText{
-	color: blue;
+	color: #3f51b5;
 
 }
 
 .locationText{
-	color: green;
+	color: #3f51b5;
 	
+}
+
+.commuteTime{
+    color: #4db6ac;
 }
 
 .savejob{
@@ -75,6 +84,9 @@ float: left;
 	clear: both;
 }
 
+.hover:hover {
+    background-color: #bbdefb;
+}
 /*Scroll Css*/
 
 #scroll {

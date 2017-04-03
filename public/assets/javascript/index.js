@@ -2,7 +2,7 @@
 
 $(document).ready(function() 
 {
-
+	$('.tooltipped').tooltip({delay: 50});//materialize tooltip
 
 	hideLogoS();
 	$(".button-collapse").sideNav();//materialize mobile view nav
@@ -138,7 +138,7 @@ $(document).ready(function()
 			              "<span class='card-title'>No search results to display.</span>",
 			              "<p>Try using the search above to find new jobs.</p>",
 			              "<p>Or</p>",
-			              "<h5><a href='/saved'>Go to your Saved Jobs</a></h5>",
+			              "<h5 class='hover'><a href='/saved'>Go to your Saved Jobs</a></h5>",
 			            "</div>",
 			             "<div class='card-action center-align'>",
 		

@@ -1,7 +1,10 @@
 $(document).ready(function()
 {	
 
-		$('.tooltipped').tooltip({delay: 50});//materialize tooltip
+		$('.tooltipped').each(function()
+		{
+			$(this).tooltip({delay: 50});
+		});//materialize tooltip
 		$(".button-collapse").sideNav();//materialize mobile view nav
 
 		//Scroll to top JS
@@ -80,9 +83,11 @@ $(document).ready(function()
 
 	function createPanel(job)
 	{
-
-		var panel = $(
+		if (job.rating != "Not Available")//Added if else for no rating on glass door
+		{
+			var panel = $(
 			[
+
 				"<div class='divider'></div>",
 				
 				"<div class='panel panel-default'>",
@@ -118,13 +123,13 @@ $(document).ready(function()
 				"<div class='companyRating'>",
 				"<a href='",
 				job.glassurl,
-				"'target='_blank'>",
+				"'target='_blank' title='View on Glassdoor.com'>",
 				"Company Rating: " + job.rating + " out of 5 stars",
 				"</a>",
 				"</div>",
 
 				"<div class='locationText'>",
-				job.location,
+				"Location: " + job.location,
 				"</div>",
 
 				"<div class='commuteTime'>",
@@ -132,7 +137,7 @@ $(document).ready(function()
 				"</div>",
 
 
-				"<a class='btn btn-floating waves-effect waves-light blue notes tooltipped' data-position='bottom' data-delay='50' data-tooltip='Add a note'>",
+				"<a class='btn btn-floating waves-effect waves-light blue notes'>",
 				"<i class='material-icons'>note_add</i>",
 				"</a>",
 				"<div class='deletebutton right-align'>",
@@ -149,6 +154,82 @@ $(document).ready(function()
 				"</div>"
 
 			].join(""));
+
+		}
+		else{
+			var panel = $(
+			[
+
+				"<div class='divider'></div>",
+				
+				"<div class='panel panel-default'>",
+					"<div class='panel-heading'>",
+
+						"<div class='headerBox left-align'>",		
+							"<h5>",
+							"<a href='",
+							job.url,
+							"'target='_blank'>",
+							job.jobtitle,
+							"</a>",
+							"</h5>",
+						"</div>",
+
+				"<div class='appliedBox right-align'>",
+
+				"<input class='checkBoxClass' type='checkbox' id='appliedBox_"+job._id+"'/>",
+      			"<label for='appliedBox_"+job._id+"'>Applied</label>",
+      			"</div>",
+				
+
+
+
+				
+				"<div class='panel-body'>",
+				job.snippet,
+
+				"<div class='companyText'>",
+				"Company: " + job.company,
+				"</div>",
+
+				"<div class='companyRating'>",
+				
+				"Company Rating: " + job.rating,
+		
+				"</div>",
+
+				"<div class='locationText'>",
+				"Location: " + job.location,
+				"</div>",
+
+				"<div class='commuteTime'>",
+				"Estimated Commute Time: " + job.commutetime,
+				"</div>",
+
+
+				"<a class='btn btn-floating waves-effect waves-light blue notes'>",
+				"<i class='material-icons'>note_add</i>",
+				"</a>",
+				"<div class='deletebutton right-align'>",
+				"<a class='btn btn-floating waves-effect waves-light red delete'>",
+				"<i class='material-icons'>delete_forever</i>",
+				"</a>",
+				"</div>",
+				"</div>",
+
+
+
+				"</div>",
+				"<div class='col s12 spacer'></div>",
+				"</div>"
+
+			].join(""));
+
+
+
+
+		
+		}
 
 		panel.data("job", job);
 
@@ -171,7 +252,7 @@ $(document).ready(function()
 			              "<p>Would you like to see available jobs?</p>",
 			            "</div>",
 			             "<div class='card-action center-align'>",
-			            "<h4><a href='/'>View Jobs</a></h4>",
+			            "<h4 class='hover'><a href='/'>View Jobs</a></h4>",
 
 
 			      "<div class='col s3'></div>",

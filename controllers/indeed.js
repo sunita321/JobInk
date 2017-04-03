@@ -94,7 +94,7 @@ module.exports = {
 					{
 						var commuteTime ="Not Available";
 						var glassurl ="";
-						var rating ="";
+						var rating ="Not Available";
 						//console.log(dataCommute.rows[0].elements[0]);
 						if (dataCommute && dataCommute.rows.length>0 && dataCommute.rows[0].elements.length>0 && 
 							dataCommute.rows[0].elements[0].hasOwnProperty('duration'))
