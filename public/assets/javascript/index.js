@@ -2,6 +2,8 @@
 
 $(document).ready(function() 
 {
+
+
 	hideLogoS();
 	$(".button-collapse").sideNav();//materialize mobile view nav
 
@@ -177,7 +179,7 @@ $(document).ready(function()
 	{
 		var title = $('#jobterm').val().trim();
 		var location = $('#locationterm').val().trim();
-		//var autocomplete = new google.maps.places.Autocomplete(location);
+	
 
 
 		if(event.isDefaultPrevented())
@@ -213,7 +215,7 @@ $(document).ready(function()
 
 	function handleClearResults(event)
 	{
-		console.log("clear1");
+		//console.log("clear1");
 		event.preventDefault();
 
 		$.ajax({
@@ -221,7 +223,7 @@ $(document).ready(function()
 			url: "/api/clear"
 		}).then(function(data)
 		{
-			console.log(data);
+			//console.log(data);
 			if (data.ok)
 			{
 				initPage();

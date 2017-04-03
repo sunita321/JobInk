@@ -62,6 +62,10 @@ var indeedJobsSchema = new Schema({
 	applied:{
 		type: Boolean,
 		default: false,
+	},
+
+	commutetime:{
+		type:String
 	}
 });
 
