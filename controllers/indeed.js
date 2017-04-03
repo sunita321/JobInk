@@ -76,11 +76,13 @@ module.exports = {
 	update: function(query, userid, cb)
 	{ //console.log(query);
 		Settings.findOne({userid:userid}, function(errorAddress, foundAddress)
-		{
-			if (foundAddress === null || !foundAddress.hasOwnProperty('address'))
+		{ console.log(foundAddress);
+			if (!foundAddress || !foundAddress.toObject().hasOwnProperty('address'))
 			{
+				console.log("2nd" + Object.getOwnPropertyNames(foundAddress).join(";"));
 				foundAddress ={};
 				foundAddress.address = "";
+				
 			}
 
 			Indeed.findOne({_id:query._id, userid:userid}, function(error, found)
