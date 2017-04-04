@@ -1,6 +1,6 @@
 # Job Ink :black_nib: :notebook:
 
-A job search assistant
+### A job search assistant
 
 Job Ink allows users to search for jobs and create their own notes for keeping track of jobs they applied for.
 
