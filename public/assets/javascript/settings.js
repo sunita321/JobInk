@@ -21,7 +21,7 @@ $(document).ready(function()
 
 			event.preventDefault();
 			var userAddress = $('#useraddress').val().trim();
-			console.log(userAddress);
+			//console.log(userAddress);
 
 			var addressToSave = {
 				address: userAddress
@@ -42,7 +42,7 @@ $(document).ready(function()
 						"</div>"
 				].join(""));
 
-				console.log(userAddress);
+				//console.log(userAddress);
 
 				$('.savedAddressDisplay').html(userAddress);
 					
@@ -53,7 +53,7 @@ $(document).ready(function()
 
 	$.get("/api/address")
 	.then(function(data)
-	{ console.log(data);
+	{ 
 		if(data != null && data.hasOwnProperty('address'))
 		{
 

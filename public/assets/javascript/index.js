@@ -28,6 +28,8 @@ $(document).ready(function()
 
 	//Google location autocomplete
 	var autocomplete = new google.maps.places.Autocomplete($('#locationterm')[0], {types: ['(regions)']});
+
+	
 	// Set div where jobs will go
 	// Add event listener to any "Save Job"
 	// Import new jobs

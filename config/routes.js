@@ -161,7 +161,7 @@ module.exports = function(router)
 
 	router.delete("/api/clear", ensureLoggedIn, function(req, res)
 	{
-		console.log("serverClear");
+		
 		var query = {};
 		query.saved = false;
 		indeedController.delete(query, req.user.id, function(err, data)
@@ -177,7 +177,7 @@ module.exports = function(router)
 		settingsController.get(req.user.id, function(data)
 		{
 			res.json(data);
-			console.log(data);
+			
 		});
 
 	});
@@ -204,7 +204,7 @@ module.exports = function(router)
 				job = data[i];
 				//setTimeout(function()
 				//{
-					console.log("data1" + data[i].jobtitle);
+					//console.log("data1" + data[i].jobtitle);
 					getCommute(req.body.address, job.company, job.location, job, function(dataCommute, tag)
 					{
 
@@ -214,15 +214,15 @@ module.exports = function(router)
 							dataCommute.rows[0].elements[0].hasOwnProperty('duration'))
 						{
 							commuteTime = dataCommute.rows[0].elements[0].duration.text;
-							console.log(dataCommute.rows[0].elements[0]);
-							console.log(commuteTime);
+							//console.log(dataCommute.rows[0].elements[0]);
+							//console.log(commuteTime);
 						}
 
 						Indeed.update({_id: tag._id, userid:req.user.id}, {
 						commutetime: commuteTime
 
 						}, {}, function(){
-							console.log(tag.jobtitle);
+							//console.log(tag.jobtitle);
 						});
 
 
@@ -230,7 +230,7 @@ module.exports = function(router)
 				//}, (100*i));
 				
 
-				console.log("dataI" + data[i].jobtitle);
+				//console.log("dataI" + data[i].jobtitle);
 			}
 		});
 	});

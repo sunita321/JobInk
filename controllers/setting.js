@@ -10,11 +10,11 @@ module.exports = {
 	{
 		Settings.findOne({userid:userid}, function(error, found)
 		{
-			console.log(userid);
+			//console.log(userid);
 			if(found != null)
 			{
 				cb(found);
-				console.log(found);
+				//console.log(found);
 			}
 			else{
 				cb("Please add address in Settings");

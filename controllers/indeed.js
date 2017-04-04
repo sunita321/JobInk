@@ -76,10 +76,10 @@ module.exports = {
 	update: function(query, userid, cb)
 	{ //console.log(query);
 		Settings.findOne({userid:userid}, function(errorAddress, foundAddress)
-		{ console.log(foundAddress);
+		{ //console.log(foundAddress);
 			if (!foundAddress || !foundAddress.toObject().hasOwnProperty('address'))
 			{
-				console.log("2nd" + Object.getOwnPropertyNames(foundAddress).join(";"));
+				//console.log("2nd" + Object.getOwnPropertyNames(foundAddress).join(";"));
 				foundAddress ={};
 				foundAddress.address = "";
 				
@@ -100,7 +100,7 @@ module.exports = {
 							dataCommute.rows[0].elements[0].hasOwnProperty('duration'))
 						{
 							commuteTime = dataCommute.rows[0].elements[0].duration.text;
-							console.log(dataCommute.rows[0].elements[0]);
+							//console.log(dataCommute.rows[0].elements[0]);
 						}
 
 						if (data && data.response.totalRecordCount>0)
