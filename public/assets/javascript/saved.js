@@ -1,10 +1,6 @@
 $(document).ready(function()
 {	
 
-		$('.tooltipped').each(function()
-		{
-			$(this).tooltip({delay: 50});
-		});//materialize tooltip
 		$(".button-collapse").sideNav();//materialize mobile view nav
 
 		//Scroll to top JS
@@ -137,11 +133,13 @@ $(document).ready(function()
 				"</div>",
 
 
-				"<a class='btn btn-floating waves-effect waves-light blue notes'>",
+				"<a class='btn tooltipped btn-floating waves-effect waves-light blue notes'",
+				" data-position='bottom' data-delay='50' data-tooltip='Add a Note'>",
 				"<i class='material-icons'>note_add</i>",
 				"</a>",
 				"<div class='deletebutton right-align'>",
-				"<a class='btn btn-floating waves-effect waves-light red delete'>",
+				"<a class='btn tooltipped btn-floating waves-effect waves-light red delete'",
+				" data-position='bottom' data-delay='50' data-tooltip='Warning! This will delete this job & all its saved notes.'>",
 				"<i class='material-icons'>delete_forever</i>",
 				"</a>",
 				"</div>",
@@ -207,11 +205,13 @@ $(document).ready(function()
 				"</div>",
 
 
-				"<a class='btn btn-floating waves-effect waves-light blue notes'>",
+				"<a class='btn tooltipped btn-floating waves-effect waves-light blue notes'",
+				" data-position='bottom' data-delay='50' data-tooltip='Add a Note'>",
 				"<i class='material-icons'>note_add</i>",
 				"</a>",
 				"<div class='deletebutton right-align'>",
-				"<a class='btn btn-floating waves-effect waves-light red delete'>",
+				"<a class='btn tooltipped btn-floating waves-effect waves-light red delete'",
+				" data-position='bottom' data-delay='50' data-tooltip='Warning! This will delete this job & all its saved notes.'>",
 				"<i class='material-icons'>delete_forever</i>",
 				"</a>",
 				"</div>",
@@ -234,6 +234,7 @@ $(document).ready(function()
 		panel.data("job", job);
 
 		panel.find('.checkBoxClass').prop('checked', job.applied);
+		panel.find('.tooltipped').tooltip({delay: 50});
 		//console.log(panel.children('.checkBoxClass'));
 
 		return panel;
@@ -332,6 +333,8 @@ $(document).ready(function()
 	function handleJobDelete()
 	{
 		var jobToDelete = $(this).parents(".panel").data();
+
+		$(this).tooltip('remove');
 
 		$.ajax({
 			method: "DELETE",
