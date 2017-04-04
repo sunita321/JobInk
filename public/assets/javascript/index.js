@@ -33,7 +33,7 @@ $(document).ready(function()
 	// Import new jobs
 	var jobContainer = $(".job-container");
 	$(document).on("click", ".btn.save", handleJobSave);
-	//$(document).on("click", ".search-new", handleJobSearch);
+	
 	$('#formjobsearch').validator().on('submit', handleJobSearch);
 
 	//Clear all unsaved search results

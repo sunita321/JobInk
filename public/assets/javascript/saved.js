@@ -1,5 +1,6 @@
 $(document).ready(function()
 {	
+	$('.tooltipped').tooltip({delay: 50});//materialize tooltip
 
 		$(".button-collapse").sideNav();//materialize mobile view nav
 
